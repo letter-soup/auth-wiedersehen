@@ -55,7 +55,7 @@ public class CreateUserRequestValidatorTests : UnitTestsBase
 		var passwordLength = Configuration.GetValue<int>(ConfigurationKey.Password.MinLength) - 1;
 		var model = new CreateUserRequest(
 			Fixture.CreateEmail(),
-			Fixture.CreatePassword(length: passwordLength),
+			Fixture.CreatePassword(passwordLength),
 			true
 		);
 		var result = _validator.TestValidate(model);

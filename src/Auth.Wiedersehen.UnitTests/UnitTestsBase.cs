@@ -6,11 +6,10 @@ namespace Auth.Wiedersehen.UnitTests;
 
 public class UnitTestsBase
 {
+	private const int PasswordMinLength = 8;
 	protected readonly IConfiguration Configuration;
 	protected readonly IFixture Fixture;
 	protected readonly ILocalizer Localizer;
-
-	private const int PasswordMinLength = 8;
 
 	protected UnitTestsBase()
 	{

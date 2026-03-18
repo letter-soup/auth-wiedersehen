@@ -7,13 +7,13 @@ namespace Auth.Wiedersehen.IntegrationTests;
 [Collection(nameof(IntegrationTestsCollection))]
 public abstract class IntegrationTestBase(IntegrationTestFixture fixture) : IAsyncLifetime
 {
+	protected const string TestClientId = "test-client";
+	protected const string TestClientSecret = "test-secret";
+
+	protected readonly IFixture Fixture = new Fixture();
 	// private IServiceScope _transactionScope = null!;
 
 	protected HttpClient Client { get; private set; } = null!;
-	protected readonly IFixture Fixture = new Fixture();
-
-	protected const string TestClientId = "test-client";
-	protected const string TestClientSecret = "test-secret";
 
 	public ValueTask InitializeAsync()
 	{

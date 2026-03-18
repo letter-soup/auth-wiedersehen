@@ -10,18 +10,17 @@ public class DevDataset : IEnvDataset
 	[
 		new IdentityResources.OpenId(),
 		new IdentityResources.Profile(),
-		new()
+		new IdentityResource
 		{
-			Name = "verification",
-			UserClaims = new List<string> { JwtClaimTypes.Email, JwtClaimTypes.EmailVerified }
-		}
+			Name = "verification", UserClaims = new List<string> { JwtClaimTypes.Email, JwtClaimTypes.EmailVerified },
+		},
 	];
 
-	public IEnumerable<ApiScope> ApiScopes => [new(name: "soup", displayName: "Soup API")];
+	public IEnumerable<ApiScope> ApiScopes => [new ApiScope("soup", "Soup API")];
 
 	public IEnumerable<Client> Clients =>
 	[
-		new()
+		new Client
 		{
 			ClientId = "soup-web",
 			ClientSecrets = { new Secret("secret".Sha256()) },
@@ -34,8 +33,8 @@ public class DevDataset : IEnvDataset
 				IdentityServerConstants.StandardScopes.OpenId,
 				IdentityServerConstants.StandardScopes.Profile,
 				"verification",
-				"soup"
-			}
-		}
+				"soup",
+			},
+		},
 	];
 }

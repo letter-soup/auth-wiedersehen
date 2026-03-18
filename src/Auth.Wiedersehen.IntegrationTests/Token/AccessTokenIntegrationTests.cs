@@ -1,7 +1,5 @@
 using Auth.Wiedersehen.IntegrationTests.Extensions;
 using Auth.Wiedersehen.IntegrationTests.Fixtures;
-using Auth.Wiedersehen.Users;
-using Duende.IdentityModel.Client;
 
 namespace Auth.Wiedersehen.IntegrationTests.Token;
 
@@ -11,10 +9,10 @@ public class AccessTokenIntegrationTests(IntegrationTestFixture fixture) : Integ
 	public async Task AccessToken_GivenValidCredentials_ShouldSucceed()
 	{
 		// Arrange
-		CreateUserRequest user = await RegisterUserAsync();
+		var user = await RegisterUserAsync();
 
 		// Act
-		TokenResponse tokenResponse = await Client.RequestPasswordTokenAsync(
+		var tokenResponse = await Client.RequestPasswordTokenAsync(
 			TestClientId,
 			TestClientSecret,
 			user.Email,
@@ -31,11 +29,11 @@ public class AccessTokenIntegrationTests(IntegrationTestFixture fixture) : Integ
 	public async Task AccessToken_GivenWrongCredentials_ShouldFail()
 	{
 		// Arrange
-		CreateUserRequest user = await RegisterUserAsync();
+		var user = await RegisterUserAsync();
 		var wrongPassword = Fixture.CreatePassword();
 
 		// Act
-		TokenResponse tokenResponse = await Client.RequestPasswordTokenAsync(
+		var tokenResponse = await Client.RequestPasswordTokenAsync(
 			TestClientId,
 			TestClientSecret,
 			user.Email,

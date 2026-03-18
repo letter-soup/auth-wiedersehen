@@ -1,8 +1,12 @@
-name: Auth.Wiedersehen CI
+name: Auth.Wiedersehen BE Build and Publish
 
 on:
   push:
     branches: ['**']
+    paths:
+      - src/Auth.Wiedersehen/**
+      - src/Auth.Wiedersehen.IntegrationTests/**
+      - src/Auth.Wiedersehen.UnitTests/**
 
 jobs:
   build-test:
@@ -48,7 +52,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: ghcr.io/${{ github.repository }}
+          images: ghcr.io/${{ github.repository }}-api
           tags: type=sha,prefix=
 
       - name: Build Docker image
@@ -94,12 +98,12 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: ghcr.io/${{ github.repository }}
+          images: ghcr.io/${{ github.repository }}-api
           tags: type=sha,prefix=
 
       - name: Determine image name
         id: image
-        run: echo "name=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+        run: echo "name=ghcr.io/$(echo '${{ github.repository }}-api' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
 
       - name: Tag and push image
         run: |

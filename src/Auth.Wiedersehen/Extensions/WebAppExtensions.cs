@@ -23,7 +23,7 @@ internal static class WebAppExtensions
 				)
 				.Enrich.FromLogContext()
 				.ReadFrom.Configuration(ctx.Configuration),
-			preserveStaticLogger: true
+			true
 		);
 
 		return builder;

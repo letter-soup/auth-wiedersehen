@@ -48,7 +48,7 @@ public class IntegrationTestFixture : IAsyncLifetime
 									{
 										$"ConnectionStrings:{ConfigurationKey.ConnectionString.PersistentGrandDb}",
 										connectionString
-									}
+									},
 								}
 							);
 						}
@@ -57,7 +57,7 @@ public class IntegrationTestFixture : IAsyncLifetime
 			);
 
 		// 3. Run migrations once
-		using IServiceScope scope = Factory.Services.CreateScope();
+		using var scope = Factory.Services.CreateScope();
 		await scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.MigrateAsync();
 		await scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>().Database.MigrateAsync();
 		await scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.MigrateAsync();
@@ -66,14 +66,20 @@ public class IntegrationTestFixture : IAsyncLifetime
 		SeedIdentityServer(scope.ServiceProvider);
 	}
 
+	public async ValueTask DisposeAsync()
+	{
+		await Factory.DisposeAsync();
+		await _dbContainer.StopAsync();
+	}
+
 	private void SeedIdentityServer(IServiceProvider serviceProvider)
 	{
-		ConfigurationDbContext context = serviceProvider.GetRequiredService<ConfigurationDbContext>();
+		var context = serviceProvider.GetRequiredService<ConfigurationDbContext>();
 		var dataset = new DevDataset();
 
 		if (!context.Clients.Any())
 		{
-			foreach (Client client in dataset.Clients)
+			foreach (var client in dataset.Clients)
 			{
 				context.Clients.Add(client.ToEntity());
 			}
@@ -89,9 +95,9 @@ public class IntegrationTestFixture : IAsyncLifetime
 					{
 						"openid",
 						"profile",
-						"soup"
+						"soup",
 					},
-					AllowOfflineAccess = true
+					AllowOfflineAccess = true,
 				}.ToEntity()
 			);
 
@@ -100,7 +106,7 @@ public class IntegrationTestFixture : IAsyncLifetime
 
 		if (!context.IdentityResources.Any())
 		{
-			foreach (IdentityResource resource in dataset.IdentityResources)
+			foreach (var resource in dataset.IdentityResources)
 			{
 				context.IdentityResources.Add(resource.ToEntity());
 			}
@@ -110,18 +116,12 @@ public class IntegrationTestFixture : IAsyncLifetime
 
 		if (!context.ApiScopes.Any())
 		{
-			foreach (ApiScope scope in dataset.ApiScopes)
+			foreach (var scope in dataset.ApiScopes)
 			{
 				context.ApiScopes.Add(scope.ToEntity());
 			}
 
 			context.SaveChanges();
 		}
-	}
-
-	public async ValueTask DisposeAsync()
-	{
-		await Factory.DisposeAsync();
-		await _dbContainer.StopAsync();
 	}
 }

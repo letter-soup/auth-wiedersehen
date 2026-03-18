@@ -1,11 +1,11 @@
 import type { TFormValidationCallback } from '@/lib/types'
 
 export async function validateEmail(
-  values: Record<string, string>,
+  _: Record<string, string>, // values
   validate: TFormValidationCallback,
   nextStep: () => void,
-  setFieldError: (field: string, error: string) => void,
-  t: (key: string) => string,
+  __: (field: string, error: string) => void, // setFieldError
+  ___: (key: string) => string, // t
 ) {
   const validationResult = await validate()
   if (!validationResult.valid) {
