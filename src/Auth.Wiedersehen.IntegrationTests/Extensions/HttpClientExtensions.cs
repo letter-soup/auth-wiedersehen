@@ -50,7 +50,7 @@ public static class HttpClientExtensions
 			string scope = "openid profile soup"
 		)
 		{
-			DiscoveryDocumentResponse discovery = await client.GetDiscoveryDocumentAsync();
+			var discovery = await client.GetDiscoveryDocumentAsync();
 			discovery.IsError.Should().BeFalse(discovery.Error);
 
 			return await client.RequestPasswordTokenAsync(
@@ -72,7 +72,7 @@ public static class HttpClientExtensions
 			string refreshToken
 		)
 		{
-			DiscoveryDocumentResponse discovery = await client.GetDiscoveryDocumentAsync();
+			var discovery = await client.GetDiscoveryDocumentAsync();
 			discovery.IsError.Should().BeFalse(discovery.Error);
 
 			return await client.RequestRefreshTokenAsync(
@@ -93,7 +93,7 @@ public static class HttpClientExtensions
 			string tokenTypeHint = "access_token"
 		)
 		{
-			DiscoveryDocumentResponse discovery = await client.GetDiscoveryDocumentAsync();
+			var discovery = await client.GetDiscoveryDocumentAsync();
 			discovery.IsError.Should().BeFalse(discovery.Error);
 
 			return await client.RevokeTokenAsync(
@@ -103,7 +103,7 @@ public static class HttpClientExtensions
 					ClientId = clientId,
 					ClientSecret = clientSecret,
 					Token = token,
-					TokenTypeHint = tokenTypeHint
+					TokenTypeHint = tokenTypeHint,
 				}
 			);
 		}

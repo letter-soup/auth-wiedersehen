@@ -14,7 +14,7 @@ public class EmailIntegrationTests(IntegrationTestFixture fixture) : Integration
 		var email = Fixture.CreateEmail();
 
 		// Act
-		HttpResponseMessage response = await Client.IsEmailAvailableAsync(email);
+		var response = await Client.IsEmailAvailableAsync(email);
 
 		// Assert
 		response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -29,7 +29,7 @@ public class EmailIntegrationTests(IntegrationTestFixture fixture) : Integration
 		await Client.CreateUserAsync(request, HttpClientMode.VerifySuccess);
 
 		// Act
-		HttpResponseMessage response = await Client.IsEmailAvailableAsync(email);
+		var response = await Client.IsEmailAvailableAsync(email);
 
 		// Assert
 		response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -42,7 +42,7 @@ public class EmailIntegrationTests(IntegrationTestFixture fixture) : Integration
 		var email = Fixture.Create<string>();
 
 		// Act
-		HttpResponseMessage response = await Client.IsEmailAvailableAsync(email);
+		var response = await Client.IsEmailAvailableAsync(email);
 
 		// Assert
 		response.StatusCode.Should().Be(HttpStatusCode.BadRequest);

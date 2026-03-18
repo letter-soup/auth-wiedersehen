@@ -1,9 +1,0 @@
-<Solution>
-  <Folder Name="/Meta/">
-    <File Path="../.gitignore" />
-    <File Path="../docker-compose.yml" />
-    <File Path="../README.md" />
-  </Folder>
-  <Project Path="Soup.Api/Soup.Api.csproj" />
-  <Project Path="Soup.UnitTests/Soup.UnitTests.csproj" />
-</Solution>

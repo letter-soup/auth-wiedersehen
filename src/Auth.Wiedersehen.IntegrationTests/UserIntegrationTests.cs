@@ -14,12 +14,12 @@ public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationT
 		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true);
 
 		// Act
-		HttpResponseMessage response = await Client.CreateUserAsync(request);
+		var response = await Client.CreateUserAsync(request);
 
 		// Assert
 		response.StatusCode.Should().Be(HttpStatusCode.Created);
 
-		CreateUserResponse? content = await response.As<CreateUserResponse>();
+		var content = await response.As<CreateUserResponse>();
 		content.Should().NotBeNull();
 		content.UserId.Should().NotBeNullOrWhiteSpace();
 	}
@@ -32,7 +32,7 @@ public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationT
 		await Client.CreateUserAsync(request, HttpClientMode.VerifySuccess);
 
 		// Act
-		HttpResponseMessage response = await Client.CreateUserAsync(request);
+		var response = await Client.CreateUserAsync(request);
 
 		// Assert
 		response.StatusCode.Should().Be(HttpStatusCode.Conflict);
@@ -49,7 +49,7 @@ public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationT
 		);
 
 		// Act
-		HttpResponseMessage response = await Client.CreateUserAsync(request);
+		var response = await Client.CreateUserAsync(request);
 
 		// Assert
 		response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -62,7 +62,7 @@ public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationT
 		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), false);
 
 		// Act
-		HttpResponseMessage response = await Client.CreateUserAsync(request);
+		var response = await Client.CreateUserAsync(request);
 
 		// Assert
 		response.StatusCode.Should().Be(HttpStatusCode.BadRequest);

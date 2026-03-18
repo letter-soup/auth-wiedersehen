@@ -1,7 +1,5 @@
 using Auth.Wiedersehen.IntegrationTests.Extensions;
 using Auth.Wiedersehen.IntegrationTests.Fixtures;
-using Auth.Wiedersehen.Users;
-using Duende.IdentityModel.Client;
 
 namespace Auth.Wiedersehen.IntegrationTests.Token;
 
@@ -11,15 +9,15 @@ public class RefreshTokenIntegrationTests(IntegrationTestFixture fixture) : Inte
 	public async Task RefreshToken_GivenValidCredentials_ShouldSucceed()
 	{
 		// Arrange
-		CreateUserRequest user = await RegisterUserAsync();
+		var user = await RegisterUserAsync();
 
 		// Act
-		TokenResponse initialTokenResponse = await Client.RequestPasswordTokenAsync(
+		var initialTokenResponse = await Client.RequestPasswordTokenAsync(
 			TestClientId,
 			TestClientSecret,
 			user.Email,
 			user.Password,
-			scope: "openid profile soup offline_access"
+			"openid profile soup offline_access"
 		);
 
 		// Assert
@@ -28,7 +26,7 @@ public class RefreshTokenIntegrationTests(IntegrationTestFixture fixture) : Inte
 		initialTokenResponse.RefreshToken.Should().NotBeNullOrWhiteSpace();
 
 		// Use the refresh token
-		TokenResponse refreshedTokenResponse = await Client.RequestRefreshTokenAsync(
+		var refreshedTokenResponse = await Client.RequestRefreshTokenAsync(
 			TestClientId,
 			TestClientSecret,
 			initialTokenResponse.RefreshToken!
@@ -48,7 +46,7 @@ public class RefreshTokenIntegrationTests(IntegrationTestFixture fixture) : Inte
 		var invalidRefreshToken = Fixture.Create<string>();
 
 		// Act
-		TokenResponse tokenResponse = await Client.RequestRefreshTokenAsync(
+		var tokenResponse = await Client.RequestRefreshTokenAsync(
 			TestClientId,
 			TestClientSecret,
 			invalidRefreshToken

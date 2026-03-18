@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Auth.Wiedersehen\Auth.Wiedersehen.csproj" />
+    <ProjectReference Include="../Auth.Wiedersehen/Auth.Wiedersehen.csproj" />
   </ItemGroup>
 
 </Project>

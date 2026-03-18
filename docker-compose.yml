@@ -1,22 +1,4 @@
 services:
-  soup-api:
-    image: soup.api
-    restart: on-failure
-    build:
-      context: ./src/Soup.Api
-      dockerfile: ./Dockerfile
-    ports:
-      - '5000:8080'
-    depends_on:
-      - auth-wiedersehen-api
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      SOUP_API_Auth__Jwt__Authority: http://auth-wiedersehen-api:8080
-      SOUP_API_Auth__Jwt__ValidateAudience: false
-      SOUP_API_Auth__Jwt__ValidIssuers__0: http://auth-wiedersehen-api:8080
-      SOUP_API_Auth__Jwt__ValidIssuers__1: http://localhost:5002
-      SOUP_API_Auth__Jwt__RequireHttpsMetadata: false
-
   auth-wiedersehen-api:
     image: auth-wiedersehen
     build:
@@ -61,3 +43,16 @@ services:
         target: /dev/shm
         tmpfs:
           size: 134217728 # 128*2^20 bytes = 128Mb
+
+  auth-wiedersehen-web:
+    image: auth-wiedersehen-web:latest
+    build:
+      context: ./src/Auth.Wiedersehen.WebClient
+      dockerfile: ./Dockerfile
+      tags:
+        - auth-wiedersehen-web:latest
+    depends_on:
+      - auth-wiedersehen-api
+    restart: on-failure:3
+    ports:
+      - "8080:80"

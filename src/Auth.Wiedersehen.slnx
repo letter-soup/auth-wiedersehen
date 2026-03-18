@@ -3,6 +3,9 @@
     <File Path="../.gitignore" />
     <File Path="../docker-compose.yml" />
     <File Path="../README.md" />
+    <File Path="../AGENTS.md" />
+    <File Path="dotnet-tools.json" />
+    <File Path="global.json" />
   </Folder>
   <Project Path="Auth.Wiedersehen.IntegrationTests/Auth.Wiedersehen.IntegrationTests.csproj" />
   <Project Path="Auth.Wiedersehen.Seeder/Auth.Wiedersehen.Seeder.csproj" />
