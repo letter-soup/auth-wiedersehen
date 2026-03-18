@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SignInView (snapshot) > renders properly 1`] = `
+"<div class="w-full h-full flex items-center justify-center py-12">
+  <div class="mx-auto grid w-[350px] gap-6">
+    <div class="grid gap-2 text-center">
+      <h1 class="text-3xl font-bold">sign-in:header</h1>
+      <p class="text-balance text-muted-foreground">sign-in:description</p>
+    </div>
+    <div class="grid gap-4">
+      <div class="grid gap-2"><label for="email" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">sign-in:email</label><input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="email" type="email" placeholder="m@example.com" required=""></div>
+      <div class="grid gap-2">
+        <div class="flex items-center"><label for="password" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">sign-in:password</label><a href="/reset-password" class="ml-auto inline-block text-sm underline text-muted-foreground hover:text-primary">sign-in:password-reset</a></div><input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="password" type="password" required="">
+      </div><button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full" type="submit">sign-in:cta</button>
+    </div>
+    <div data-orientation="horizontal" role="separator" label="sign-in:no-account" class="shrink-0 bg-border relative h-px w-full mt-2"><span class="text-xs text-muted-foreground bg-background absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center h-[1px] py-1 px-2">sign-in:no-account</span></div><button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline h-10 px-4 py-2"><a href="/sign-up">sign-in:sign-up</a></button>
+  </div>
+</div>"
+`;

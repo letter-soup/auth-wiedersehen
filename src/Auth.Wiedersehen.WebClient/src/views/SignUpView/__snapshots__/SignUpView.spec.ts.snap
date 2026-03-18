@@ -1,0 +1,71 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SignUpView (snapshot) > given valid email, should render password step on cta click 1`] = `
+"<div class="w-full h-full flex items-center justify-center py-12">
+  <div class="mx-auto grid w-[350px] gap-6">
+    <div class="grid gap-2 text-center">
+      <h1 class="text-3xl font-bold">sign-up:header</h1>
+      <p class="text-balance text-muted-foreground">sign-up:step-password:description</p>
+    </div>
+    <form novalidate="">
+      <div role="group" aria-label="progress" data-linear="" data-orientation="horizontal" class="gap-2 block w-full">
+        <form>
+          <div class="flex w-full flex-start gap-2">
+            <div data-state="completed" data-orientation="horizontal" class="items-center gap-2 group data-[disabled]:pointer-events-none hidden">
+              <div type="button" data-state="completed" data-orientation="horizontal" tabindex="0" aria-describedby="radix-vue-stepper-item-description-v-1" aria-labelledby="radix-vue-stepper-item-title-v-0" class="p-2 flex flex-col items-center text-center gap-2 rounded-md"></div>
+            </div>
+            <div data-state="active" data-orientation="horizontal" class="items-center gap-2 group data-[disabled]:pointer-events-none hidden" aria-current="true">
+              <div type="button" data-state="active" data-orientation="horizontal" tabindex="0" aria-describedby="radix-vue-stepper-item-description-v-3" aria-labelledby="radix-vue-stepper-item-title-v-2" class="p-2 flex flex-col items-center text-center gap-2 rounded-md"></div>
+            </div>
+          </div>
+          <!--v-if-->
+          <div class="flex flex-col gap-4" data-testid="sign-up-step-password">
+            <div class="space-y-2"><label for="radix-v-5-form-item" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">sign-up:password</label><input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="password" type="password" name="password" aria-describedby="radix-v-5-form-item-description" aria-invalid="false">
+              <!---->
+            </div>
+            <div class="space-y-2"><label for="radix-v-6-form-item" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">sign-up:confirm-password</label><input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="confirm-password" type="password" name="confirmPassword" aria-describedby="radix-v-6-form-item-description" aria-invalid="false">
+              <!---->
+            </div><button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full" type="submit">sign-up:cta</button>
+            <p class="px-8 text-center text-sm text-muted-foreground">sign-up:cta-acknowledgement</p>
+          </div>
+        </form>
+        <div aria-live="polite" aria-atomic="true" role="status" style="transform: translateX(-100%); position: absolute; pointer-events: none; opacity: 0; margin: 0px;"> Step 2 of 2</div>
+      </div>
+    </form>
+    <div data-orientation="horizontal" role="separator" label="sign-up:has-account" class="shrink-0 bg-border relative h-px w-full mt-2"><span class="text-xs text-muted-foreground bg-background absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center h-[1px] py-1 px-2">sign-up:has-account</span></div><button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline h-10 px-4 py-2"><a href="/sign-in">sign-up:sign-in</a></button>
+  </div>
+</div>"
+`;
+
+exports[`SignUpView (snapshot) > should render email step by default 1`] = `
+"<div class="w-full h-full flex items-center justify-center py-12">
+  <div class="mx-auto grid w-[350px] gap-6">
+    <div class="grid gap-2 text-center">
+      <h1 class="text-3xl font-bold">sign-up:header</h1>
+      <p class="text-balance text-muted-foreground">sign-up:step-email:description</p>
+    </div>
+    <form novalidate="">
+      <div role="group" aria-label="progress" data-linear="" data-orientation="horizontal" class="gap-2 block w-full">
+        <form>
+          <div class="flex w-full flex-start gap-2">
+            <div aria-current="true" data-state="active" data-orientation="horizontal" class="items-center gap-2 group data-[disabled]:pointer-events-none hidden">
+              <div type="button" data-state="active" data-orientation="horizontal" tabindex="0" aria-describedby="radix-vue-stepper-item-description-v-1" aria-labelledby="radix-vue-stepper-item-title-v-0" class="p-2 flex flex-col items-center text-center gap-2 rounded-md"></div>
+            </div>
+            <div data-state="inactive" data-orientation="horizontal" class="items-center gap-2 group data-[disabled]:pointer-events-none hidden">
+              <div type="button" data-state="inactive" data-orientation="horizontal" tabindex="0" aria-describedby="radix-vue-stepper-item-description-v-3" aria-labelledby="radix-vue-stepper-item-title-v-2" class="p-2 flex flex-col items-center text-center gap-2 rounded-md"></div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-4" data-testid="sign-up-step-email">
+            <div class="space-y-2"><label for="radix-v-4-form-item" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">sign-up:email</label><input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="email" type="email" name="email" aria-describedby="radix-v-4-form-item-description" aria-invalid="false">
+              <!---->
+            </div><button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full" id="cta" type="button">sign-up:step:cta</button>
+          </div>
+          <!--v-if-->
+        </form>
+        <div aria-live="polite" aria-atomic="true" role="status" style="transform: translateX(-100%); position: absolute; pointer-events: none; opacity: 0; margin: 0px;"> Step 1 of 0</div>
+      </div>
+    </form>
+    <div data-orientation="horizontal" role="separator" label="sign-up:has-account" class="shrink-0 bg-border relative h-px w-full mt-2"><span class="text-xs text-muted-foreground bg-background absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center h-[1px] py-1 px-2">sign-up:has-account</span></div><button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline h-10 px-4 py-2"><a href="/sign-in">sign-up:sign-in</a></button>
+  </div>
+</div>"
+`;

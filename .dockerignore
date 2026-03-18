@@ -1,0 +1,8 @@
+node_modules/
+.idea/
+
+.editorconfig
+.prettierignore
+.prettierrc.json
+
+README.md

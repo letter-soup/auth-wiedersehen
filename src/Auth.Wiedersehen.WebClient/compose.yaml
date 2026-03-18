@@ -1,0 +1,10 @@
+services:
+  auth-wiedersehen-web:
+    image: auth-wiedersehen-web:latest
+    restart: on-failure:3
+    build:
+      context: .
+      tags:
+        - auth-wiedersehen-web:latest
+    ports:
+      - "8080:80"

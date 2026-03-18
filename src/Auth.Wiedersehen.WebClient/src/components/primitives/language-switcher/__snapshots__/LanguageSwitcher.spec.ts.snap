@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LanguageSwitcher (snapshot) > renders properly 1`] = `
+"<button role="combobox" type="button" aria-controls="radix-vue-select-content-v-0" aria-expanded="false" aria-required="false" aria-autocomplete="none" dir="ltr" data-state="closed" class="flex items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;>span]:truncate text-start w-fit h-fit">
+  <languages-icon size="16"></languages-icon>
+  <chevron-down-icon class="w-4 h-4 opacity-50 shrink-0" aria-hidden="true"></chevron-down-icon>
+</button>
+<!--teleport start-->
+<!--teleport end-->
+<select default-value="en-US" style="position: absolute; border: 0px; width: 1px; display: inline-block; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;" data-testid="language-switcher" data-selected-locale="en-US" aria-hidden="true" tabindex="-1" value="en-US">
+  <!---->
+  <option value="en-US">language:en-US</option>
+  <option value="ru-RU">language:ru-RU</option>
+</select>"
+`;
