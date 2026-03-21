@@ -3,18 +3,16 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
-import { toast } from '@/components/ui/toast'
+import { toast } from 'vue-sonner'
 
 const signInHandler = () => {
-  toast({
-    title: 'You successfully signed in!',
-  })
+  toast('You successfully signed in!')
 }
 </script>
 
 <template>
   <div class="w-full h-full flex items-center justify-center py-12">
-    <div class="mx-auto grid w-[350px] gap-6">
+    <div class="mx-auto grid w-87.5 gap-6">
       <div class="grid gap-2 text-center">
         <h1 class="text-3xl font-bold">
           {{ $t('sign-in:header') }}

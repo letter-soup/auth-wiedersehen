@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod'
-import { computed, type ComputedRef, h, type Ref, ref, watch } from 'vue'
+import { computed, type ComputedRef, type Ref, ref, watch } from 'vue'
 import { onBeforeRouteUpdate, useRouter } from 'vue-router'
 import { Stepper, StepperItem, StepperTrigger } from '@/components/ui/stepper'
 import {
@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { toast } from '@/components/ui/toast'
+import { toast } from 'vue-sonner'
 import { Separator } from '@/components/ui/separator'
 import { SIGN_UP_STEPS } from '@/views/SignUpView/lib/constants'
 import { useI18n } from 'vue-i18n'
@@ -66,13 +66,8 @@ async function onSubmit(
   const validationResult = await validate()
 
   if (stepIndex.value === SIGN_UP_STEPS.length && validationResult.valid) {
-    toast({
-      title: 'You submitted the following values:',
-      description: h(
-        'pre',
-        { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' },
-        h('code', { class: 'text-white' }, JSON.stringify(values, null, 2)),
-      ),
+    toast('You submitted the following values:', {
+      description: JSON.stringify(values, null, 2),
     })
   }
 }
