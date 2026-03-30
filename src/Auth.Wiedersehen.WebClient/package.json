@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
+    "@vee-validate/zod": "^4.15.1",
     "@vueuse/core": "^14.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -27,14 +28,14 @@
     "reka-ui": "^2.9.2",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.2",
+    "vee-validate": "^4.15.1",
     "vue": "beta",
     "vue-i18n": "^11.3.0",
     "vue-router": "^5.0.4",
-    "vue-sonner": "^2.0.9"
+    "vue-sonner": "^2.0.9",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.100",
-    "@iconify/vue": "^5.0.0",
     "@playwright/test": "^1.58.2",
     "@tsconfig/node24": "^24.0.4",
     "@types/jsdom": "^28.0.1",
@@ -59,6 +60,7 @@
     "vite": "beta",
     "vite-plugin-vue-devtools": "^8.1.1",
     "vitest": "^4.1.2",
+    "vue-router-mock": "^2.0.2",
     "vue-tsc": "^3.2.6"
   },
   "engines": {

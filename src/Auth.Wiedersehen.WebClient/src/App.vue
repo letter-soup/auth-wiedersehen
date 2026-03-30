@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import ThemeToggle from '@/components/primitives/theme-toggle/ThemeToggle.vue'
+import { RouterView } from 'vue-router'
+import FooterSection from '@/components/layout/footer-section/FooterSection.vue'
+import 'vue-sonner/style.css'
 import { Toaster } from '@/components/ui/sonner'
-import { Button } from '@/components/ui/button'
-import { toast } from 'vue-sonner'
-import LanguageSwitcher from '@/components/primitives/language-switcher/LanguageSwitcher.vue'
 </script>
 
 <template>
-  <ThemeToggle />
-  <h1 class="text-3xl font-bold underline">Hello world!</h1>
-  <Button @click="() => toast('My first toast')">{{ $t('sign-in:header') }}</Button>
-  <LanguageSwitcher />
+  <main class="h-full">
+    <RouterView />
+  </main>
   <Toaster />
+  <FooterSection />
 </template>
 
 <style scoped></style>

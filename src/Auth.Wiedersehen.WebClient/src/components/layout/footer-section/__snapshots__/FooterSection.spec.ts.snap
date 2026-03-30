@@ -1,0 +1,42 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FooterSection (snapshot) > renders properly 1`] = `
+"<footer class="grid grid-cols-12 gap-2 pb-4">
+  <div class="col-start-3 col-span-8 lg:col-start-4 lg:col-span-6 max-sm:col-start-2 max-sm:col-span-10">
+    <div class="grid gap-6 grid-cols-3">
+      <div class="flex justify-center">
+        <div class="w-fit">
+          <h2 class="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">footer:resources</h2>
+          <ul class="text-gray-600 dark:text-gray-400 space-y-2">
+            <li><a class="hover:underline" target="_blank" href="https://github.com/letter-soup/auth-wiedersehen-web">footer:documentation</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <div class="w-fit">
+          <h2 class="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">footer:community</h2>
+          <ul class="text-gray-600 dark:text-gray-400 space-y-2">
+            <li><a class="hover:underline" target="_blank" href="https://github.com/letter-soup/auth-wiedersehen-web">social-media:github</a></li>
+            <li><a class="hover:underline" target="_blank" href="https://discord.gg/dUQvNkZc">social-media:discord</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <div class="w-fit">
+          <h2 class="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">footer:legal</h2>
+          <ul class="text-gray-600 dark:text-gray-400 space-y-2">
+            <li><a class="hover:underline" target="_blank" href="/terms">footer:terms-of-service</a></li>
+            <li><a class="hover:underline" target="_blank" href="/privacy">footer:privacy-policy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div data-orientation="horizontal" role="none" data-slot="separator" class="bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px my-5"></div>
+    <div class="flex justify-between items-center"><span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"> © 2025 <a href="/" class="hover:underline">Auth Wiedersehen™</a>. footer:all-rights-reserved</span>
+      <div class="flex gap-2"><button data-slot="button" data-variant="ghost" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 h-9 px-4 py-2 has-[>svg]:px-3"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 16 16" class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 16 16" class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"></svg><span class="sr-only">Toggle theme</span></button>
+        <language-switcher></language-switcher>
+      </div>
+    </div>
+  </div>
+</footer>"
+`;
