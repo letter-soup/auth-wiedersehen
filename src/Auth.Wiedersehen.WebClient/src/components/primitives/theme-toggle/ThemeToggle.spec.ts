@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@/lib/__tests__/mount'
 import ThemeToggle from './ThemeToggle.vue'
 import { ButtonStub } from '@/lib/__mock__/stubs'
-import { MoonIcon, SunIcon } from '@/lib/__mock__/lucide-vue-next.mock'
 
 const mockMode = { value: 'light' }
 vi.mock('@vueuse/core', () => ({
