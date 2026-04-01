@@ -35,7 +35,7 @@ export default mergeConfig(
           '**/__fixture__/**',
           '**/__temp__/**',
         ],
-      }
-    }
+      },
+    },
   })
 )

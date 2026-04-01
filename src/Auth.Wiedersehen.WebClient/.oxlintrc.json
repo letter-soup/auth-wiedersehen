@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "vue", "vitest"],
+  "env": {
+    "browser": true
+  },
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": [
+    "src/components/ui",
+    "**/__mock__/**",
+    "**/__snapshots__/**",
+    "**/__fixture__/**",
+    "**/__temp__/**"
+  ]
+}

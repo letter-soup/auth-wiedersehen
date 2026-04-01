@@ -33,5 +33,6 @@
   "sign-up:step:cta": "Next",
   "sign-up:terms-of-service": "Terms of Service",
   "social-media:discord": "Discord",
-  "social-media:github": "GitHub"
+  "social-media:github": "GitHub",
+  "theme:toggle": "Toggle Theme"
 }

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import FooterSection from '@/components/layout/footer/FooterSection.vue'
-import { Toaster } from '@/components/ui/toast'
+import FooterSection from '@/components/layout/footer-section/FooterSection.vue'
+import 'vue-sonner/style.css'
+import { Toaster } from '@/components/ui/sonner'
 </script>
 
 <template>
