@@ -28,7 +28,10 @@ describe('ThemeToggle', () => {
     expect(wrapper.find('.sr-only').text()).toBe('theme:toggle')
   })
 
-  it.each([['light', 'dark'], ['dark', 'light']])('given %s theme should toggle color mode to %s on click', async (theme, expected) => {
+  it.each([
+    ['light', 'dark'],
+    ['dark', 'light'],
+  ])('given %s theme should toggle color mode to %s on click', async (theme, expected) => {
     mockMode.value = theme
 
     const wrapper = mount(ThemeToggle, { global: { stubs } })

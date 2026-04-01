@@ -2,7 +2,7 @@
 import { FOOTER_LINK_GROUPS } from '@/components/layout/footer-section/constants'
 import { Separator } from '@/components/ui/separator'
 import LanguageSwitcher from '@/components/primitives/language-switcher/LanguageSwitcher.vue'
-import ThemeToggle from "@/components/primitives/theme-toggle/ThemeToggle.vue";
+import ThemeToggle from '@/components/primitives/theme-toggle/ThemeToggle.vue'
 </script>
 
 <template>

@@ -19,3 +19,12 @@ export const SIGN_UP_STEPS: SignUpStep[] = [
     description: 'sign-up:step-password:description',
   },
 ]
+
+export function getSignUpStep(step: number): SignUpStep {
+  const stepObj = SIGN_UP_STEPS.find((s) => s.step === step) ?? null
+  if (stepObj == null) {
+    throw new RangeError('Invalid step')
+  }
+
+  return stepObj
+}

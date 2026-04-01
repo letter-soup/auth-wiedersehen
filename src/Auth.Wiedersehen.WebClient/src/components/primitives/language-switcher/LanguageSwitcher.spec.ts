@@ -6,9 +6,7 @@ import { createStub } from '@/lib/__mock__/component-stub'
 const { mockLocale, mockAvailableLocales, vueI18nMock } = await vi.hoisted(
   () => import('@/lib/__mock__/vue-i18n.mock'),
 )
-const { lucideVueNextMock } = await vi.hoisted(
-  () => import('@/lib/__mock__/lucide-vue-next.mock'),
-)
+const { lucideVueNextMock } = await vi.hoisted(() => import('@/lib/__mock__/lucide-vue-next.mock'))
 
 vi.mock('vue-i18n', () => vueI18nMock)
 vi.mock('lucide-vue-next', () => lucideVueNextMock)
@@ -41,10 +39,13 @@ describe('LanguageSwitcher', () => {
     expect(items).toHaveLength(mockAvailableLocales.length)
   })
 
-  it.each(mockAvailableLocales)('displays data-selected-locale matching current locale', (locale) => {
-    mockLocale.value = locale
-    const wrapper = mount(LanguageSwitcher, { global: { stubs } })
-    const select = wrapper.find('[data-testid="language-switcher"]')
-    expect(select.attributes('data-selected-locale')).toBe(locale)
-  })
+  it.each(mockAvailableLocales)(
+    'displays data-selected-locale matching current locale',
+    (locale) => {
+      mockLocale.value = locale
+      const wrapper = mount(LanguageSwitcher, { global: { stubs } })
+      const select = wrapper.find('[data-testid="language-switcher"]')
+      expect(select.attributes('data-selected-locale')).toBe(locale)
+    },
+  )
 })

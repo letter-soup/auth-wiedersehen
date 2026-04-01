@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { toast } from 'vue-sonner'
 import { Separator } from '@/components/ui/separator'
-import { SIGN_UP_STEPS } from '@/views/sign-up/lib/constants'
+import { getSignUpStep, SIGN_UP_STEPS } from '@/views/sign-up/lib/constants'
 import { useI18n } from 'vue-i18n'
 import type { TFormValidationCallback } from '@/lib/types'
 import { createFormSchema } from '@/views/sign-up/lib/form-schema'
@@ -27,7 +27,7 @@ const router = useRouter()
 const initialStep: number = 1
 const stepIndex: Ref<number> = ref(initialStep)
 const stepDescription: ComputedRef<string> = computed(
-  () => SIGN_UP_STEPS[stepIndex.value - 1].description,
+  () => getSignUpStep(stepIndex.value).description,
 )
 const formSchema: ComputedRef = computed(() => createFormSchema(t))
 
