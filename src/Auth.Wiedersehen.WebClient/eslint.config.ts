@@ -35,4 +35,14 @@ export default defineConfigWithVueTs(
   ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
 
   skipFormatting,
+
+  {
+    ignores: [
+      'src/components/ui',
+      '**/__mock__/**',
+      '**/__snapshots__/**',
+      '**/__fixture__/**',
+      '**/__temp__/**',
+    ],
+  }
 )
