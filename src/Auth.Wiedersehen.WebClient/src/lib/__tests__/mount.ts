@@ -25,7 +25,7 @@ export function mount<T extends Component>(component: T, options?: ComponentMoun
   }
 
   // Merge the default options with the user-provided options
-  const mergedOptions = merge(defaultOptions, options || {})
+  const mergedOptions = merge.recursive(defaultOptions, options || {})
 
   // Call the original mount function with the merged options
   return vueMount(component, mergedOptions)

@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App (snapshot) > renders correctly (snapshot) 1`] = `
+"<main class="h-full">
+  <div data-testid="router-view-stub"></div>
+</main>
+<div data-testid="toaster-stub" class="toaster group" style="--normal-bg: var(--popover); --normal-text: var(--popover-foreground); --normal-border: var(--border); --border-radius: var(--radius);" invert="false" richcolors="false" expand="false" closebutton="false"></div>
+<div data-testid="footer-section-stub"></div>"
+`;

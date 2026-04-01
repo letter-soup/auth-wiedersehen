@@ -33,5 +33,6 @@
   "sign-up:step:cta": "Продолжить",
   "sign-up:terms-of-service": "Пользовательское соглашение",
   "social-media:discord": "Discord",
-  "social-media:github": "GitHub"
+  "social-media:github": "GitHub",
+  "theme:toggle": "Сменить тему"
 }

@@ -19,6 +19,6 @@ const toggleTheme = () => {
     <Sun
       class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
     />
-    <span class="sr-only">Toggle theme</span>
+    <span class="sr-only">{{ $t('theme:toggle') }}</span>
   </Button>
 </template>
