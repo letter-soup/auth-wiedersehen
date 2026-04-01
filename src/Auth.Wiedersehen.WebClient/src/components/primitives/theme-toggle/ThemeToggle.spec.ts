@@ -9,9 +9,10 @@ vi.mock('@vueuse/core', () => ({
   useColorMode: () => mockMode,
 }))
 
+const { lucideVueNextMock } = await vi.hoisted(() => import('@/lib/__mock__/lucide-vue-next.mock'))
+vi.mock('lucide-vue-next', () => lucideVueNextMock)
+
 const stubs = {
-  Moon: MoonIcon,
-  Sun: SunIcon,
   Button: ButtonStub,
 }
 
