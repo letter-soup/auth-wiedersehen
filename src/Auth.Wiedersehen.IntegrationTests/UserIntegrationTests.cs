@@ -7,14 +7,19 @@ namespace Auth.Wiedersehen.IntegrationTests;
 
 public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationTestBase(fixture)
 {
+	private CreateUserRequest ValidRequest => new CreateUserRequest(
+		Fixture.CreateEmail(),
+		Fixture.CreatePassword(),
+		true,
+		Constants.TestClientId,
+		Constants.TestClientRedirectUri
+	);
+
 	[Fact]
 	public async Task CreateUser_GivenValidData_Returns201Created()
 	{
-		// Arrange
-		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true, Fixture.Create<string>(), Fixture.CreateUri());
-
 		// Act
-		var response = await Client.CreateUserAsync(request);
+		var response = await Client.CreateUserAsync(ValidRequest);
 
 		// Assert
 		response.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -28,8 +33,7 @@ public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationT
 	public async Task CreateUser_GivenDuplicateEmail_Returns409Conflict()
 	{
 		// Arrange
-		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true, Fixture.Create<string>(), Fixture.CreateUri());
-		await Client.CreateUserAsync(request, HttpClientMode.VerifySuccess);
+		var request = await RegisterUserAsync();
 
 		// Act
 		var response = await Client.CreateUserAsync(request);
@@ -41,15 +45,10 @@ public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationT
 	[Fact]
 	public async Task CreateUser_GivenWeakPassword_Returns400BadRequest()
 	{
-		// Arrange
-		var request = new CreateUserRequest(
-			Fixture.CreateEmail(),
-			Fixture.CreatePassword(config: PasswordConfig.LowerCase),
-			true, Fixture.Create<string>(), Fixture.CreateUri()
-		);
-
 		// Act
-		var response = await Client.CreateUserAsync(request);
+		var response = await Client.CreateUserAsync(
+			ValidRequest with { Password = Fixture.CreatePassword(config: PasswordConfig.LowerCase) }
+		);
 
 		// Assert
 		response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -58,11 +57,8 @@ public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationT
 	[Fact]
 	public async Task CreateUser_GivenTermsNotAccepted_Returns400BadRequest()
 	{
-		// Arrange
-		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), false, Fixture.Create<string>(), Fixture.CreateUri());
-
 		// Act
-		var response = await Client.CreateUserAsync(request);
+		var response = await Client.CreateUserAsync(ValidRequest with { TermsAccepted = false });
 
 		// Assert
 		response.StatusCode.Should().Be(HttpStatusCode.BadRequest);

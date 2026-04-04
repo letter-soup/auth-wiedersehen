@@ -18,10 +18,10 @@ public static class FixtureExtensions
 			PasswordConfig config = PasswordConfig.All
 		)
 		{
-			var lowerCaseAlphabet = "abcdefghijklmnopqrstuvwxyz";
-			var upperCaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			var digitAlphabet = "0123456789";
-			var specialAlphabet = "!@#$%_+";
+			const string lowerCaseAlphabet = "abcdefghijklmnopqrstuvwxyz";
+			const string upperCaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			const string digitAlphabet = "0123456789";
+			const string specialAlphabet = "!@#$%_+";
 			var rnd = new Random();
 
 			var alphabetBuilder = new StringBuilder();

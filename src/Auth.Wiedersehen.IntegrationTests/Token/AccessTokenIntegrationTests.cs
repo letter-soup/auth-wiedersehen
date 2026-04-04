@@ -13,8 +13,8 @@ public class AccessTokenIntegrationTests(IntegrationTestFixture fixture) : Integ
 
 		// Act
 		var tokenResponse = await Client.RequestPasswordTokenAsync(
-			TestClientId,
-			TestClientSecret,
+			Constants.TestClientId,
+			Constants.TestClientSecret,
 			user.Email,
 			user.Password
 		);
@@ -34,8 +34,8 @@ public class AccessTokenIntegrationTests(IntegrationTestFixture fixture) : Integ
 
 		// Act
 		var tokenResponse = await Client.RequestPasswordTokenAsync(
-			TestClientId,
-			TestClientSecret,
+			Constants.TestClientId,
+			Constants.TestClientSecret,
 			user.Email,
 			wrongPassword
 		);
