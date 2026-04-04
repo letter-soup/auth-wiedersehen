@@ -1,3 +1,4 @@
+using Auth.Wiedersehen.Emails.Queries;
 using Auth.Wiedersehen.Exceptions;
 using Auth.Wiedersehen.Extensions;
 using FluentValidation;
@@ -7,9 +8,9 @@ namespace Auth.Wiedersehen.Emails;
 
 [ApiController]
 [Route("api/v1/email")]
-public class EmailController(IEmailService emailService) : Controller
+public class EmailController(IIsEmailAvailableQuery isEmailAvailableQuery) : Controller
 {
-	private readonly IEmailService _emailService = emailService.Required(nameof(emailService));
+	private readonly IIsEmailAvailableQuery _isEmailAvailableQuery = isEmailAvailableQuery.Required(nameof(isEmailAvailableQuery));
 
 	[HttpGet("is-available")]
 	[ProducesResponseType(StatusCodes.Status200OK)]
@@ -26,7 +27,7 @@ public class EmailController(IEmailService emailService) : Controller
 			throw new HttpResponseException(validationResult.ToKeyValuePairs());
 		}
 
-		var emailAvailable = await _emailService.IsEmailAvailableAsync(request.Email);
+		var emailAvailable = await _isEmailAvailableQuery.ExecuteAsync(request.Email);
 
 		return emailAvailable ? Ok() : Conflict();
 	}

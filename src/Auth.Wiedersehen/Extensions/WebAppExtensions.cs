@@ -2,9 +2,12 @@ using Auth.Wiedersehen.Authentication;
 using Auth.Wiedersehen.Configuration;
 using Auth.Wiedersehen.Database.Migrations;
 using Auth.Wiedersehen.Emails;
+using Auth.Wiedersehen.Emails.Queries;
 using Auth.Wiedersehen.Exceptions;
 using Auth.Wiedersehen.Localization;
 using Auth.Wiedersehen.Users;
+using Auth.Wiedersehen.Users.Commands;
+using Auth.Wiedersehen.Users.Queries;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -31,9 +34,9 @@ internal static class WebAppExtensions
 
 	public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
 	{
-		builder.Services.AddScoped<IUserService, UserService>();
-		builder.Services.AddScoped<IEmailService, EmailService>();
-		builder.Services.AddScoped<IRedirectUriValidator, RedirectUriValidator>();
+		builder.Services.AddScoped<IIsEmailAvailableQuery, IsEmailAvailableQuery>();
+		builder.Services.AddScoped<IGetClientRedirectUrisQuery, GetClientRedirectUrisQuery>();
+		builder.Services.AddScoped<ICreateUserCommand, CreateUserCommand>();
 		builder.Services.AddScoped<IValidator<CreateUserRequest>, CreateUserRequestValidator>();
 		builder.Services.AddScoped<IValidator<EmailAvailableRequest>, EmailAvailableRequestValidator>();
 

@@ -2,13 +2,13 @@ using Auth.Wiedersehen.Exceptions;
 using Auth.Wiedersehen.Extensions;
 using Microsoft.AspNetCore.Identity;
 
-namespace Auth.Wiedersehen.Users;
+namespace Auth.Wiedersehen.Users.Commands;
 
-internal sealed class UserService(UserManager<ApplicationUser> userManager) : IUserService
+internal sealed class CreateUserCommand(UserManager<ApplicationUser> userManager) : ICreateUserCommand
 {
 	private readonly UserManager<ApplicationUser> _userManager = userManager.Required(nameof(userManager));
 
-	public async Task<CreateUserResponse> CreateAsync(CreateUserRequest request)
+	public async Task<CreateUserResponse> ExecuteAsync(CreateUserRequest request)
 	{
 		var user = new ApplicationUser
 		{
@@ -19,11 +19,8 @@ internal sealed class UserService(UserManager<ApplicationUser> userManager) : IU
 
 		var result = await _userManager.CreateAsync(user, request.Password);
 
-		if (!result.Succeeded)
-		{
-			throw new HttpResponseException(result.ToKeyValuePairs(), StatusCodes.Status409Conflict);
-		}
-
-		return new CreateUserResponse(user.Id);
+		return result.Succeeded
+			? new CreateUserResponse(user.Id, request.RedirectUri)
+			: throw new HttpResponseException(result.ToKeyValuePairs(), StatusCodes.Status409Conflict);
 	}
 }
