@@ -1,20 +1,24 @@
 using Auth.Wiedersehen.Configuration;
 using Auth.Wiedersehen.Localization;
-using Auth.Wiedersehen.Users.Queries;
 using FluentValidation;
 
 namespace Auth.Wiedersehen.Users;
 
-public record CreateUserRequest(string Email, string Password, bool TermsAccepted, string? ClientId = null, string? RedirectUri = null);
+public record CreateUserRequest(
+	string Email,
+	string Password,
+	bool TermsAccepted,
+	string ClientId,
+	string RedirectUri
+);
 
-public record CreateUserResponse(string UserId, string? RedirectUri = null);
+public record CreateUserResponse(string UserId, string RedirectUri);
 
 public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
 {
 	public CreateUserRequestValidator(
 		IConfiguration configuration,
-		ILocalizer localizer,
-		IGetClientRedirectUrisQuery getClientRedirectUrisQuery
+		ILocalizer localizer
 	)
 	{
 		var passwordMinLength = configuration.GetValue<int>(ConfigurationKey.Password.MinLength);
@@ -24,6 +28,7 @@ public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
 			.WithMessage(localizer[LocalizationKey.Error.Email.Missing])
 			.EmailAddress()
 			.WithMessage(localizer[LocalizationKey.Error.Email.Invalid]);
+
 		RuleFor(x => x.Password)
 			.NotEmpty()
 			.WithMessage(localizer[LocalizationKey.Error.Password.Missing])
@@ -37,37 +42,21 @@ public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
 			.WithMessage(localizer[LocalizationKey.Error.Password.DigitMissing])
 			.Matches("[^a-zA-Z0-9]")
 			.WithMessage(localizer[LocalizationKey.Error.Password.SpecialMissing]);
+
 		RuleFor(x => x.TermsAccepted)
 			.Equal(true)
 			.WithMessage(localizer[LocalizationKey.Error.Terms.NotAccepted]);
 
-		RuleFor(x => x.RedirectUri)
-			.Must((request, _) => !(string.IsNullOrWhiteSpace(request.ClientId) ^ string.IsNullOrWhiteSpace(request.RedirectUri)))
-			.WithMessage(localizer[LocalizationKey.Error.Redirect.InvalidRedirectUri]);
-
 		RuleFor(x => x.ClientId)
-			.MustAsync(async (request, clientId, _) =>
-			{
-				if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(request.RedirectUri))
-					return true;
-
-				var redirectUris = await getClientRedirectUrisQuery.ExecuteAsync(clientId);
-				return redirectUris is not null;
-			})
-			.WithMessage(localizer[LocalizationKey.Error.Redirect.InvalidClient]);
+			.NotEmpty()
+			.WithMessage(localizer[LocalizationKey.Error.Client.InvalidClient]);
 
 		RuleFor(x => x.RedirectUri)
-			.MustAsync(async (request, redirectUri, _) =>
-			{
-				if (string.IsNullOrWhiteSpace(request.ClientId) || string.IsNullOrWhiteSpace(redirectUri))
-					return true;
-
-				var redirectUris = await getClientRedirectUrisQuery.ExecuteAsync(request.ClientId);
-				if (redirectUris is null)
-					return true;
-
-				return redirectUris.Any(r => r == redirectUri);
-			})
+			.NotEmpty()
+			.WithMessage(localizer[LocalizationKey.Error.Redirect.InvalidRedirectUri])
+			.Must(uriStr => Uri.TryCreate(uriStr, UriKind.Absolute, out var uri) &&
+				(uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+			)
 			.WithMessage(localizer[LocalizationKey.Error.Redirect.InvalidRedirectUri]);
 	}
 }

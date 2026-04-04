@@ -58,4 +58,9 @@ public static class FixtureExtensions
 
 		return passwordBuilder.ToString();
 	}
+
+	public static string CreateUri(this IFixture fixture)
+	{
+		return new Uri($"https://{fixture.Create<string>()}.com").AbsoluteUri;
+	}
 }
