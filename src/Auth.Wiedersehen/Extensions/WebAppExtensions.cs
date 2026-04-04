@@ -36,6 +36,7 @@ internal static class WebAppExtensions
 	{
 		builder.Services.AddScoped<IIsEmailAvailableQuery, IsEmailAvailableQuery>();
 		builder.Services.AddScoped<IGetClientRedirectUrisQuery, GetClientRedirectUrisQuery>();
+		builder.Services.AddScoped<IGetClientByIdQuery, GetClientByIdQuery>();
 		builder.Services.AddScoped<ICreateUserCommand, CreateUserCommand>();
 		builder.Services.AddScoped<IValidator<CreateUserRequest>, CreateUserRequestValidator>();
 		builder.Services.AddScoped<IValidator<EmailAvailableRequest>, EmailAvailableRequestValidator>();

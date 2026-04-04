@@ -11,7 +11,7 @@ public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationT
 	public async Task CreateUser_GivenValidData_Returns201Created()
 	{
 		// Arrange
-		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true);
+		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true, Fixture.Create<string>(), Fixture.CreateUri());
 
 		// Act
 		var response = await Client.CreateUserAsync(request);
@@ -28,7 +28,7 @@ public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationT
 	public async Task CreateUser_GivenDuplicateEmail_Returns409Conflict()
 	{
 		// Arrange
-		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true);
+		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true, Fixture.Create<string>(), Fixture.CreateUri());
 		await Client.CreateUserAsync(request, HttpClientMode.VerifySuccess);
 
 		// Act
@@ -45,7 +45,7 @@ public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationT
 		var request = new CreateUserRequest(
 			Fixture.CreateEmail(),
 			Fixture.CreatePassword(config: PasswordConfig.LowerCase),
-			true
+			true, Fixture.Create<string>(), Fixture.CreateUri()
 		);
 
 		// Act
@@ -59,7 +59,7 @@ public class UserIntegrationTests(IntegrationTestFixture fixture) : IntegrationT
 	public async Task CreateUser_GivenTermsNotAccepted_Returns400BadRequest()
 	{
 		// Arrange
-		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), false);
+		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), false, Fixture.Create<string>(), Fixture.CreateUri());
 
 		// Act
 		var response = await Client.CreateUserAsync(request);

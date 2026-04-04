@@ -25,7 +25,7 @@ public class EmailIntegrationTests(IntegrationTestFixture fixture) : Integration
 	{
 		// Arrange
 		var email = Fixture.CreateEmail();
-		var request = new CreateUserRequest(email, Fixture.CreatePassword(), true);
+		var request = new CreateUserRequest(email, Fixture.CreatePassword(), true, Fixture.Create<string>(), Fixture.CreateUri());
 		await Client.CreateUserAsync(request, HttpClientMode.VerifySuccess);
 
 		// Act

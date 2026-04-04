@@ -9,6 +9,7 @@ public abstract class IntegrationTestBase(IntegrationTestFixture fixture) : IAsy
 {
 	protected const string TestClientId = "test-client";
 	protected const string TestClientSecret = "test-secret";
+	protected const string TestClientRedirectUri = "https://auth-wiedersehen.io";
 
 	protected readonly IFixture Fixture = new Fixture();
 	// private IServiceScope _transactionScope = null!;
@@ -36,7 +37,7 @@ public abstract class IntegrationTestBase(IntegrationTestFixture fixture) : IAsy
 
 	protected async Task<CreateUserRequest> RegisterUserAsync()
 	{
-		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true);
+		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true, TestClientId, TestClientRedirectUri);
 		await Client.CreateUserAsync(request, HttpClientMode.VerifySuccess);
 		return request;
 	}

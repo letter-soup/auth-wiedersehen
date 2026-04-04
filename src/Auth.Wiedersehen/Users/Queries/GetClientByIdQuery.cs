@@ -1,24 +1,20 @@
 using Auth.Wiedersehen.Extensions;
 using Duende.IdentityServer.EntityFramework.DbContexts;
+using Duende.IdentityServer.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Auth.Wiedersehen.Users.Queries;
 
-internal sealed class GetClientRedirectUrisQuery(
+internal sealed class GetClientByIdQuery(
 	ConfigurationDbContext configurationDbContext
-) : IGetClientRedirectUrisQuery
+) : IGetClientByIdQuery
 {
 	private readonly ConfigurationDbContext _configurationDbContext =
 		configurationDbContext.Required(nameof(configurationDbContext));
 
-	public async Task<IReadOnlyList<string>> ExecuteAsync(string clientId, CancellationToken ct)
+	public async Task<Client?> ExecuteAsync(string clientId, CancellationToken ct)
 	{
-		var client = await _configurationDbContext.Clients
-			.Include(c => c.RedirectUris)
+		return await _configurationDbContext.Clients
 			.FirstOrDefaultAsync(c => c.ClientId == clientId, ct);
-
-		return client is null
-			? Array.Empty<string>()
-			: client.RedirectUris.Select(r => r.RedirectUri).ToList();
 	}
 }

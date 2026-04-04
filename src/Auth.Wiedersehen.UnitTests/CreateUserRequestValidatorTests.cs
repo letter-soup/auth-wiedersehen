@@ -3,6 +3,7 @@ using Auth.Wiedersehen.Localization;
 using Auth.Wiedersehen.UnitTests.Extensions;
 using Auth.Wiedersehen.Users;
 using Auth.Wiedersehen.Users.Queries;
+using Duende.IdentityServer.EntityFramework.Entities;
 using FluentValidation.TestHelper;
 using Microsoft.Extensions.Configuration;
 
@@ -10,40 +11,68 @@ namespace Auth.Wiedersehen.UnitTests;
 
 public class CreateUserRequestValidatorTests : UnitTestsBase
 {
-	private readonly Mock<IGetClientRedirectUrisQuery> _queryMock;
 	private readonly CreateUserRequestValidator _validator;
+
+	private readonly string _validClientId;
+	private readonly string _validRedirectUri;
+	private readonly string _invalidClientId;
 
 	public CreateUserRequestValidatorTests()
 	{
-		_queryMock = new Mock<IGetClientRedirectUrisQuery>();
-		_validator = new CreateUserRequestValidator(Configuration, Localizer);
+		_validClientId = Fixture.Create<string>();
+		_validRedirectUri = Fixture.CreateUri();
+		_invalidClientId = Fixture.Create<string>();
+
+		var clientByIdQueryMock = new Mock<IGetClientByIdQuery>();
+		var redirectUrisQueryMock = new Mock<IGetClientRedirectUrisQuery>();
+
+		clientByIdQueryMock
+			.Setup(x => x.ExecuteAsync(It.Is<string>(y => y == _validClientId), It.IsAny<CancellationToken>()))
+			.ReturnsAsync(() => new Client { ClientId = _validClientId });
+		clientByIdQueryMock
+			.Setup(x => x.ExecuteAsync(It.Is<string>(y => y == _invalidClientId), It.IsAny<CancellationToken>()))
+			.ReturnsAsync(() => null);
+		redirectUrisQueryMock
+			.Setup(x => x.ExecuteAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+			.ReturnsAsync(() => [Fixture.CreateUri()]);
+		redirectUrisQueryMock
+			.Setup(x => x.ExecuteAsync(It.Is<string>(y => y == _validClientId), It.IsAny<CancellationToken>()))
+			.ReturnsAsync(() => [_validRedirectUri]);
+
+		_validator = new CreateUserRequestValidator(
+			Configuration,
+			Localizer,
+			clientByIdQueryMock.Object,
+			redirectUrisQueryMock.Object
+		);
 	}
+
+	private CreateUserRequest ValidRequest =>
+		new CreateUserRequest(
+			Fixture.CreateEmail(),
+			Fixture.CreatePassword(),
+			true,
+			_validClientId,
+			_validRedirectUri
+		);
 
 	[Fact]
 	public async Task GivenValidRequest_ShouldHaveNoError()
 	{
-		var model = new CreateUserRequest(
-			Fixture.CreateEmail(),
-			Fixture.CreatePassword(),
-			true,
-			Fixture.Create<string>(),
-			Fixture.CreateUri()
+		var result = await _validator.TestValidateAsync(
+			ValidRequest,
+			cancellationToken: TestContext.Current.CancellationToken
 		);
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
 		result.ShouldNotHaveAnyValidationErrors();
 	}
 
 	[Fact]
 	public async Task GivenEmptyEmail_ShouldHaveError()
 	{
-		var model = new CreateUserRequest(
-			string.Empty,
-			Fixture.CreatePassword(),
-			true,
-			Fixture.Create<string>(),
-			Fixture.CreateUri()
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with { Email = string.Empty },
+			cancellationToken: TestContext.Current.CancellationToken
 		);
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
 		result.ShouldHaveValidationErrorFor(x => x.Email);
 		result.Errors
 			.Should()
@@ -53,8 +82,10 @@ public class CreateUserRequestValidatorTests : UnitTestsBase
 	[Fact]
 	public async Task GivenInvalidEmail_ShouldHaveError()
 	{
-		var model = new CreateUserRequest(Fixture.Create<string>(), Fixture.CreatePassword(), true, Fixture.Create<string>(), Fixture.CreateUri());
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with { Email = Fixture.Create<string>() },
+			cancellationToken: TestContext.Current.CancellationToken
+		);
 		result.ShouldHaveValidationErrorFor(x => x.Email);
 		result.Errors
 			.Should()
@@ -64,8 +95,10 @@ public class CreateUserRequestValidatorTests : UnitTestsBase
 	[Fact]
 	public async Task GivenEmptyPassword_ShouldHaveError()
 	{
-		var model = new CreateUserRequest(Fixture.CreateEmail(), string.Empty, true, Fixture.Create<string>(), Fixture.CreateUri());
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with { Password = string.Empty },
+			cancellationToken: TestContext.Current.CancellationToken
+		);
 		result.ShouldHaveValidationErrorFor(x => x.Password);
 		result.Errors
 			.Should()
@@ -76,12 +109,10 @@ public class CreateUserRequestValidatorTests : UnitTestsBase
 	public async Task GivenShortPassword_ShouldHaveError()
 	{
 		var passwordLength = Configuration.GetValue<int>(ConfigurationKey.Password.MinLength) - 1;
-		var model = new CreateUserRequest(
-			Fixture.CreateEmail(),
-			Fixture.CreatePassword(passwordLength),
-			true, Fixture.Create<string>(), Fixture.CreateUri()
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with { Password = Fixture.CreatePassword(passwordLength) },
+			cancellationToken: TestContext.Current.CancellationToken
 		);
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
 		result.ShouldHaveValidationErrorFor(x => x.Password);
 		result.Errors
 			.Should()
@@ -91,12 +122,13 @@ public class CreateUserRequestValidatorTests : UnitTestsBase
 	[Fact]
 	public async Task GivenPasswordWithoutUppercase_ShouldHaveError()
 	{
-		var model = new CreateUserRequest(
-			Fixture.CreateEmail(),
-			Fixture.CreatePassword(config: PasswordConfig.All & ~PasswordConfig.UpperCase),
-			true, Fixture.Create<string>(), Fixture.CreateUri()
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with
+			{
+				Password = Fixture.CreatePassword(config: PasswordConfig.All & ~PasswordConfig.UpperCase)
+			},
+			cancellationToken: TestContext.Current.CancellationToken
 		);
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
 		result.ShouldHaveValidationErrorFor(x => x.Password);
 		result.Errors
 			.Should()
@@ -106,12 +138,13 @@ public class CreateUserRequestValidatorTests : UnitTestsBase
 	[Fact]
 	public async Task GivenPasswordWithoutLowercase_ShouldHaveError()
 	{
-		var model = new CreateUserRequest(
-			Fixture.CreateEmail(),
-			Fixture.CreatePassword(config: PasswordConfig.All & ~PasswordConfig.LowerCase),
-			true, Fixture.Create<string>(), Fixture.CreateUri()
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with
+			{
+				Password = Fixture.CreatePassword(config: PasswordConfig.All & ~PasswordConfig.LowerCase)
+			},
+			cancellationToken: TestContext.Current.CancellationToken
 		);
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
 		result.ShouldHaveValidationErrorFor(x => x.Password);
 		result.Errors
 			.Should()
@@ -121,12 +154,13 @@ public class CreateUserRequestValidatorTests : UnitTestsBase
 	[Fact]
 	public async Task GivenPasswordWithoutDigit_ShouldHaveError()
 	{
-		var model = new CreateUserRequest(
-			Fixture.CreateEmail(),
-			Fixture.CreatePassword(config: PasswordConfig.All & ~PasswordConfig.Digits),
-			true, Fixture.Create<string>(), Fixture.CreateUri()
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with
+			{
+				Password = Fixture.CreatePassword(config: PasswordConfig.All & ~PasswordConfig.Digits)
+			},
+			cancellationToken: TestContext.Current.CancellationToken
 		);
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
 		result.ShouldHaveValidationErrorFor(x => x.Password);
 		result.Errors
 			.Should()
@@ -136,12 +170,13 @@ public class CreateUserRequestValidatorTests : UnitTestsBase
 	[Fact]
 	public async Task GivenPasswordWithoutSpecialCharacter_ShouldHaveError()
 	{
-		var model = new CreateUserRequest(
-			Fixture.CreateEmail(),
-			Fixture.CreatePassword(config: PasswordConfig.All & ~PasswordConfig.Special),
-			true, Fixture.Create<string>(), Fixture.CreateUri()
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with
+			{
+				Password = Fixture.CreatePassword(config: PasswordConfig.All & ~PasswordConfig.Special)
+			},
+			cancellationToken: TestContext.Current.CancellationToken
 		);
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
 		result.ShouldHaveValidationErrorFor(x => x.Password);
 		result.Errors
 			.Should()
@@ -151,8 +186,10 @@ public class CreateUserRequestValidatorTests : UnitTestsBase
 	[Fact]
 	public async Task GivenTermsNotAccepted_ShouldHaveError()
 	{
-		var model = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), false, Fixture.Create<string>(), Fixture.CreateUri());
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with { TermsAccepted = false },
+			cancellationToken: TestContext.Current.CancellationToken
+		);
 		result.ShouldHaveValidationErrorFor(x => x.TermsAccepted);
 		result.Errors
 			.Should()
@@ -162,24 +199,65 @@ public class CreateUserRequestValidatorTests : UnitTestsBase
 	[Fact]
 	public async Task GivenEmptyClientId_ShouldHaveError()
 	{
-		var model = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true, string.Empty, Fixture.CreateUri());
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
-		result.ShouldNotHaveAnyValidationErrors();
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with { ClientId = string.Empty },
+			cancellationToken: TestContext.Current.CancellationToken
+		);
+		result.ShouldHaveValidationErrorFor(x => x.ClientId);
+		result.Errors
+			.Should()
+			.ContainSingle(error => error.ErrorMessage == LocalizationKey.Error.Client.Missing);
+	}
+
+	[Fact]
+	public async Task GivenNonExistingClientId_ShouldHaveError()
+	{
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with { ClientId = _invalidClientId },
+			cancellationToken: TestContext.Current.CancellationToken
+		);
+		result.ShouldHaveValidationErrorFor(x => x.ClientId);
+		result.Errors
+			.Should()
+			.ContainSingle(error => error.ErrorMessage == LocalizationKey.Error.Client.NotFound);
 	}
 
 	[Fact]
 	public async Task GivenEmptyRedirectUri_ShouldHaveError()
 	{
-		var model = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true, Fixture.Create<string>(), string.Empty);
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
-		result.ShouldNotHaveAnyValidationErrors();
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with { RedirectUri = string.Empty },
+			cancellationToken: TestContext.Current.CancellationToken
+		);
+		result.ShouldHaveValidationErrorFor(x => x.RedirectUri);
+		result.Errors
+			.Should()
+			.Contain(error => error.ErrorMessage == LocalizationKey.Error.Redirect.Missing);
 	}
 
 	[Fact]
 	public async Task GivenInvalidRedirectUri_ShouldHaveError()
 	{
-		var model = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true, Fixture.Create<string>(), Fixture.Create<string>());
-		var result = await _validator.TestValidateAsync(model, cancellationToken: TestContext.Current.CancellationToken);
-		result.ShouldNotHaveAnyValidationErrors();
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with { RedirectUri = Fixture.Create<string>() },
+			cancellationToken: TestContext.Current.CancellationToken
+		);
+		result.ShouldHaveValidationErrorFor(x => x.RedirectUri);
+		result.Errors
+			.Should()
+			.ContainSingle(error => error.ErrorMessage == LocalizationKey.Error.Redirect.Invalid);
+	}
+
+	[Fact]
+	public async Task GivenNonExistingRedirectUri_ShouldHaveError()
+	{
+		var result = await _validator.TestValidateAsync(
+			ValidRequest with { RedirectUri = Fixture.CreateUri() },
+			cancellationToken: TestContext.Current.CancellationToken
+		);
+		result.ShouldHaveValidationErrorFor(x => x.RedirectUri);
+		result.Errors
+			.Should()
+			.ContainSingle(error => error.ErrorMessage == LocalizationKey.Error.Redirect.NotFound);
 	}
 }

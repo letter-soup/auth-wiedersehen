@@ -85,10 +85,19 @@
   <data name="Error:Email:Invalid" xml:space="preserve">
     <value>Email has invalid format.</value>
   </data>
-  <data name="Error:Redirect:InvalidClient" xml:space="preserve">
-    <value>The specified client_id is invalid.</value>
+  <data name="Error:Client:Missing" xml:space="preserve">
+    <value>The Client ID is missing.</value>
   </data>
-  <data name="Error:Redirect:InvalidRedirectUri" xml:space="preserve">
-    <value>The specified redirect_uri is not allowed for this client.</value>
+  <data name="Error:Client:NotFound" xml:space="preserve">
+    <value>The specified Client ID not found.</value>
+  </data>
+  <data name="Error:Redirect:Missing" xml:space="preserve">
+    <value>The Redirect Uri is missing.</value>
+  </data>
+  <data name="Error:Redirect:Invalid" xml:space="preserve">
+    <value>The specified Redirect Uri is invalid.</value>
+  </data>
+  <data name="Error:Redirect:NotFound" xml:space="preserve">
+    <value>The specified Redirect Uri is not allowed for this client.</value>
   </data>
 </root>

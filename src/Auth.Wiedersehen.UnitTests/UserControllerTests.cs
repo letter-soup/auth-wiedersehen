@@ -62,7 +62,7 @@ public class UserControllerTests : UnitTestsBase
 		_validatorMock.Setup(v => v.ValidateAsync(request, default))
 			.ReturnsAsync(new ValidationResult());
 		_createUserCommandMock.Setup(s => s.ExecuteAsync(request))
-			.ReturnsAsync(new CreateUserResponse(userId));
+			.ReturnsAsync(new CreateUserResponse(userId, request.RedirectUri));
 		_userManagerMock.Setup(m => m.FindByIdAsync(userId))
 			.ReturnsAsync(user);
 
@@ -79,7 +79,7 @@ public class UserControllerTests : UnitTestsBase
 	[Fact]
 	public async Task GivenValidationFailure_ShouldThrowHttpResponseException()
 	{
-		var request = new CreateUserRequest(string.Empty, string.Empty, false);
+		var request = new CreateUserRequest(string.Empty, string.Empty, false, string.Empty, string.Empty);
 
 		_validatorMock.Setup(v => v.ValidateAsync(request, default))
 			.ReturnsAsync(new ValidationResult(
@@ -95,13 +95,13 @@ public class UserControllerTests : UnitTestsBase
 	[Fact]
 	public async Task GivenUserNotFoundAfterCreation_ShouldNotCallSignIn()
 	{
-		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true);
+		var request = new CreateUserRequest(Fixture.CreateEmail(), Fixture.CreatePassword(), true, Fixture.Create<string>(), Fixture.CreateUri());
 		var userId = Fixture.Create<string>();
 
 		_validatorMock.Setup(v => v.ValidateAsync(request, default))
 			.ReturnsAsync(new ValidationResult());
 		_createUserCommandMock.Setup(s => s.ExecuteAsync(request))
-			.ReturnsAsync(new CreateUserResponse(userId));
+			.ReturnsAsync(new CreateUserResponse(userId, request.RedirectUri));
 		_userManagerMock.Setup(m => m.FindByIdAsync(userId))
 			.ReturnsAsync((ApplicationUser?)null);
 
