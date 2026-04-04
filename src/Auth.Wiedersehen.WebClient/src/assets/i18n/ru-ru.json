@@ -1,5 +1,7 @@
 {
   "error:email-already-taken": "Email уже занят. Попробуйте восстановить пароль",
+  "error:invalid-client": "Указанный клиент недействителен",
+  "error:invalid-redirect-uri": "Указанный URI перенаправления не разрешён",
   "error:sign-up:password-mismatch": "Пароли должны совпадать!",
   "error:sign-up:weak-password": "Пароль должен содержать от 8 заглавных и прописных латинских букв, чисел и специальных символов",
   "footer:all-rights-reserved": "Все права защищены",

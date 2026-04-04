@@ -24,5 +24,11 @@ internal struct LocalizationKey
 		{
 			public const string NotAccepted = "Error:Terms:NotAccepted";
 		}
+
+		public struct Redirect
+		{
+			public const string InvalidClient = "Error:Redirect:InvalidClient";
+			public const string InvalidRedirectUri = "Error:Redirect:InvalidRedirectUri";
+		}
 	}
 }

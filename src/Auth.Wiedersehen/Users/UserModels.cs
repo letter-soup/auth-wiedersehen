@@ -4,9 +4,9 @@ using FluentValidation;
 
 namespace Auth.Wiedersehen.Users;
 
-public record CreateUserRequest(string Email, string Password, bool TermsAccepted);
+public record CreateUserRequest(string Email, string Password, bool TermsAccepted, string? ClientId = null, string? RedirectUri = null);
 
-public record CreateUserResponse(string UserId);
+public record CreateUserResponse(string UserId, string? RedirectUri = null);
 
 public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
 {

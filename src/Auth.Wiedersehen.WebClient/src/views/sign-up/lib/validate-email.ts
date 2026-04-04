@@ -1,5 +1,5 @@
 import type { TFormValidationCallback } from '@/lib/types'
-import { checkEmailAvailability } from '@/lib/api'
+import { checkEmailAvailability } from '@/lib/api/endpoints.ts'
 
 export async function validateEmail(
   values: Record<string, string>,

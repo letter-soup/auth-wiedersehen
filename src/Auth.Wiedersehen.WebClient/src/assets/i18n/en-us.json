@@ -1,5 +1,7 @@
 {
   "error:email-already-taken": "Email is already in use. Try resetting your password",
+  "error:invalid-client": "The specified client is invalid",
+  "error:invalid-redirect-uri": "The specified redirect URI is not allowed",
   "error:sign-up:password-mismatch": "Passwords must match!",
   "error:sign-up:weak-password": "Password must have at least 8 characters, lowercase and uppercase letters, numbers and special symbols",
   "footer:all-rights-reserved": "All Rights Reserved.",

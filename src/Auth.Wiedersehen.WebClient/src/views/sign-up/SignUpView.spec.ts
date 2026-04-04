@@ -11,7 +11,12 @@ vi.mock('vue-sonner', () => ({
 
 vi.mock('@/lib/api', () => ({
   checkEmailAvailability: vi.fn().mockResolvedValue(undefined),
-  createUser: vi.fn().mockResolvedValue(undefined),
+  createUser: vi.fn().mockResolvedValue({ userId: '123', redirectUri: undefined }),
+}))
+
+vi.mock('@/lib/api/endpoints.ts', () => ({
+  checkEmailAvailability: vi.fn().mockResolvedValue(undefined),
+  createUser: vi.fn().mockResolvedValue({ userId: '123', redirectUri: undefined }),
 }))
 
 vi.mock('@/views/sign-up/lib/validate-email', () => ({

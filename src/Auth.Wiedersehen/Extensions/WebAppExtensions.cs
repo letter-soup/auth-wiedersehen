@@ -33,6 +33,7 @@ internal static class WebAppExtensions
 	{
 		builder.Services.AddScoped<IUserService, UserService>();
 		builder.Services.AddScoped<IEmailService, EmailService>();
+		builder.Services.AddScoped<IRedirectUriValidator, RedirectUriValidator>();
 		builder.Services.AddScoped<IValidator<CreateUserRequest>, CreateUserRequestValidator>();
 		builder.Services.AddScoped<IValidator<EmailAvailableRequest>, EmailAvailableRequestValidator>();
 
