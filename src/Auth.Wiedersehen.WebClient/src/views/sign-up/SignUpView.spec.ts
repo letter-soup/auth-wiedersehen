@@ -9,6 +9,11 @@ vi.mock('vue-sonner', () => ({
   toast: vi.fn(),
 }))
 
+vi.mock('@/lib/api', () => ({
+  checkEmailAvailability: vi.fn().mockResolvedValue(undefined),
+  createUser: vi.fn().mockResolvedValue(undefined),
+}))
+
 vi.mock('@/views/sign-up/lib/validate-email', () => ({
   validateEmail: async (
     _values: Record<string, string>,

@@ -1,6 +1,6 @@
 services:
   auth-wiedersehen-api:
-    image: auth-wiedersehen
+    image: ghcr.io/letter-soup/auth-wiedersehen-api:latest
     build:
       context: ./src/Auth.Wiedersehen
       dockerfile: ./Dockerfile
@@ -18,7 +18,7 @@ services:
       AUTHW_UI__CookieLoginUrl: ${AW_UI_HOST}/cookie/sign-in
 
   auth-wiedersehen-seeder:
-    image: auth-wiedersehen
+    image: ghcr.io/letter-soup/auth-wiedersehen-api:latest
     build:
       context: ./src/Auth.Wiedersehen.Seeder
       dockerfile: ./Dockerfile
@@ -45,7 +45,7 @@ services:
           size: 134217728 # 128*2^20 bytes = 128Mb
 
   auth-wiedersehen-web:
-    image: auth-wiedersehen-web:latest
+    image: ghcr.io/letter-soup/auth-wiedersehen-web:latest
     build:
       context: ./src/Auth.Wiedersehen.WebClient
       dockerfile: ./Dockerfile

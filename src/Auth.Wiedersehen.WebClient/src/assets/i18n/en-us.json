@@ -1,5 +1,5 @@
 {
-  "email-already-taken": "Email is already in use. Try resetting your password",
+  "error:email-already-taken": "Email is already in use. Try resetting your password",
   "error:sign-up:password-mismatch": "Passwords must match!",
   "error:sign-up:weak-password": "Password must have at least 8 characters, lowercase and uppercase letters, numbers and special symbols",
   "footer:all-rights-reserved": "All Rights Reserved.",
@@ -21,6 +21,8 @@
   "sign-in:sign-up": "Create a new account",
   "sign-up:confirm-password": "Confirm Password",
   "sign-up:cta": "Confirm",
+  "sign-up:error": "Something went wrong. Please try again",
+  "sign-up:success": "Account created successfully",
   "sign-up:cta-acknowledgement": "By clicking confirm, you agree to our {termsOfService} and {privacyPolicy}",
   "sign-up:email": "Email",
   "sign-up:has-account": "Already registered?",

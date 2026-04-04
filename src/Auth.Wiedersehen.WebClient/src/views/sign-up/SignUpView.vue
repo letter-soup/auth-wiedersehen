@@ -20,6 +20,7 @@ import { useI18n } from 'vue-i18n'
 import type { TFormValidationCallback } from '@/lib/types'
 import { createFormSchema } from '@/views/sign-up/lib/form-schema'
 import { validateEmail } from '@/views/sign-up/lib/validate-email'
+import { createUser } from '@/lib/api'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -66,9 +67,16 @@ async function onSubmit(
   const validationResult = await validate()
 
   if (stepIndex.value === SIGN_UP_STEPS.length && validationResult.valid) {
-    toast('You submitted the following values:', {
-      description: JSON.stringify(values, null, 2),
-    })
+    try {
+      await createUser(values.email, values.password, true)
+      toast(t('sign-up:success'))
+    } catch (error) {
+      if (error instanceof Response) {
+        toast(t('sign-up:error'), { description: error.statusText })
+      } else {
+        toast(t('sign-up:error'))
+      }
+    }
   }
 }
 </script>

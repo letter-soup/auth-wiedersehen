@@ -1,18 +1,26 @@
 import type { TFormValidationCallback } from '@/lib/types'
+import { checkEmailAvailability } from '@/lib/api'
 
 export async function validateEmail(
-  _: Record<string, string>, // values
+  values: Record<string, string>,
   validate: TFormValidationCallback,
   nextStep: () => void,
-  __: (field: string, error: string) => void, // setFieldError
-  ___: (key: string) => string, // t
+  setFieldError: (field: string, error: string) => void,
+  t: (key: string) => string,
 ) {
   const validationResult = await validate()
   if (!validationResult.valid) {
     return
   }
 
-  if (validationResult.valid) {
+  try {
+    await checkEmailAvailability(values.email)
     nextStep()
+  } catch (error) {
+    if (error instanceof Response && error.status === 409) {
+      setFieldError('email', t('error:email-already-taken'))
+    } else {
+      throw error
+    }
   }
 }
