@@ -11,8 +11,8 @@ public class RevokeTokenIntegrationTests(IntegrationTestFixture fixture) : Integ
 		// Arrange
 		var user = await RegisterUserAsync();
 		var tokenResponse = await Client.RequestPasswordTokenAsync(
-			TestClientId,
-			TestClientSecret,
+			Constants.TestClientId,
+			Constants.TestClientSecret,
 			user.Email,
 			user.Password
 		);
@@ -20,8 +20,8 @@ public class RevokeTokenIntegrationTests(IntegrationTestFixture fixture) : Integ
 
 		// Act
 		var revocationResponse = await Client.RevokeTokenAsync(
-			TestClientId,
-			TestClientSecret,
+			Constants.TestClientId,
+			Constants.TestClientSecret,
 			tokenResponse.AccessToken!
 		);
 

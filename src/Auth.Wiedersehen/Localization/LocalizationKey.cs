@@ -24,5 +24,18 @@ internal struct LocalizationKey
 		{
 			public const string NotAccepted = "Error:Terms:NotAccepted";
 		}
+
+		public struct Client
+		{
+			public const string NotFound = "Error:Client:NotFound";
+			public const string Missing = "Error:Client:Missing";
+		}
+
+		public struct Redirect
+		{
+			public const string Invalid = "Error:Redirect:Invalid";
+			public const string Missing = "Error:Redirect:Missing";
+			public const string NotFound = "Error:Redirect:NotFound";
+		}
 	}
 }

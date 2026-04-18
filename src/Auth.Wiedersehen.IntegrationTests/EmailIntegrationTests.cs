@@ -24,12 +24,10 @@ public class EmailIntegrationTests(IntegrationTestFixture fixture) : Integration
 	public async Task IsAvailable_GivenExistingEmail_Returns409Conflict()
 	{
 		// Arrange
-		var email = Fixture.CreateEmail();
-		var request = new CreateUserRequest(email, Fixture.CreatePassword(), true);
-		await Client.CreateUserAsync(request, HttpClientMode.VerifySuccess);
+		var request = await RegisterUserAsync();
 
 		// Act
-		var response = await Client.IsEmailAvailableAsync(email);
+		var response = await Client.IsEmailAvailableAsync(request.Email);
 
 		// Assert
 		response.StatusCode.Should().Be(HttpStatusCode.Conflict);

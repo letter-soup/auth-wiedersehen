@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod'
 import { computed, type ComputedRef, type Ref, ref, watch } from 'vue'
-import { onBeforeRouteUpdate, useRouter } from 'vue-router'
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
 import { Stepper, StepperItem, StepperTrigger } from '@/components/ui/stepper'
 import {
   Form,
@@ -20,9 +20,14 @@ import { useI18n } from 'vue-i18n'
 import type { TFormValidationCallback } from '@/lib/types'
 import { createFormSchema } from '@/views/sign-up/lib/form-schema'
 import { validateEmail } from '@/views/sign-up/lib/validate-email'
+import { createUser } from '@/lib/api/endpoints.ts'
 
 const { t } = useI18n()
+const route = useRoute()
 const router = useRouter()
+
+const clientId = computed(() => (route.query.client_id as string) || undefined)
+const redirectUri = computed(() => (route.query.redirect_uri as string) || undefined)
 
 const initialStep: number = 1
 const stepIndex: Ref<number> = ref(initialStep)
@@ -46,9 +51,12 @@ onBeforeRouteUpdate((to, from, next) => {
 watch(
   () => stepIndex.value,
   (value) => {
+    const query: Record<string, string | number> = { step: value }
+    if (clientId.value) query.client_id = clientId.value
+    if (redirectUri.value) query.redirect_uri = redirectUri.value
     router.push({
       ...router.currentRoute.value,
-      query: { step: value },
+      query,
     })
   },
 )
@@ -66,9 +74,27 @@ async function onSubmit(
   const validationResult = await validate()
 
   if (stepIndex.value === SIGN_UP_STEPS.length && validationResult.valid) {
-    toast('You submitted the following values:', {
-      description: JSON.stringify(values, null, 2),
-    })
+    try {
+      const response = await createUser(
+        values.email,
+        values.password,
+        true,
+        clientId.value,
+        redirectUri.value,
+      )
+      toast(t('sign-up:success'))
+      if (response.redirectUri) {
+        window.location.href = response.redirectUri
+      } else {
+        await router.push('/')
+      }
+    } catch (error) {
+      if (error instanceof Response) {
+        toast(t('sign-up:error'), { description: error.statusText })
+      } else {
+        toast(t('sign-up:error'))
+      }
+    }
   }
 }
 </script>
