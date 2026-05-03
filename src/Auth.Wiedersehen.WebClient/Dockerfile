@@ -12,7 +12,8 @@ FROM nginx:stable-alpine-slim AS runtime
 RUN apk add --no-cache gettext
 COPY --from=builder /app/.nginx/nginx.conf.template /etc/nginx/conf.d/default.conf.template
 COPY --from=builder /app/.nginx/docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+COPY --from=builder /app/scripts/generate-env.sh /scripts/generate-env.sh
+RUN chmod +x /docker-entrypoint.sh /scripts/generate-env.sh
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=builder /app/dist .
