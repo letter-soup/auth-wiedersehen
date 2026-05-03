@@ -1,6 +1,6 @@
 import type { CreateUserRequest, CreateUserResponse } from '@/lib/api/schema.ts'
 
-export async function checkEmailAvailability(email: string): Promise<void> {
+export async function checkEmailAvailability(email: string = ''): Promise<void> {
   const response = await fetch(`/api/v1/email/is-available?email=${encodeURIComponent(email)}`)
 
   if (!response.ok) {
@@ -9,8 +9,8 @@ export async function checkEmailAvailability(email: string): Promise<void> {
 }
 
 export async function createUser(
-  email: string,
-  password: string,
+  email: string = '',
+  password: string = '',
   termsAccepted: boolean,
   clientId?: string,
   redirectUri?: string,
