@@ -8,9 +8,12 @@ COPY . .
 RUN npm run build
 
 FROM nginx:stable-alpine-slim AS runtime
-COPY --from=builder /app/.nginx/nginx.conf /etc/nginx/conf.d/default.conf
+RUN apk add --no-cache gettext
+COPY --from=builder /app/.nginx/nginx.conf.template /etc/nginx/conf.d/default.conf.template
+COPY --from=builder /app/.nginx/docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=builder /app/dist .
 
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/docker-entrypoint.sh"]

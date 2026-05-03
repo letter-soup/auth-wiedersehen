@@ -56,3 +56,5 @@ services:
     restart: on-failure:3
     ports:
       - "8080:80"
+    environment:
+      AW_API_URL: ${AW_API_URL}
