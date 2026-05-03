@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "sh scripts/generate-env.sh .env",
     "dev": "vite",
+    "pretest:unit": "sh scripts/generate-env.sh .env",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest run",

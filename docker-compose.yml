@@ -57,4 +57,6 @@ services:
     ports:
       - "8080:80"
     environment:
-      AW_API_URL: ${AW_API_URL}
+      AW_API_URI: ${AW_API_URI}
+      AW_CLIENT_ID: ${AW_CLIENT_ID}
+      AW_REDIRECT_URI: ${AW_REDIRECT_URI}

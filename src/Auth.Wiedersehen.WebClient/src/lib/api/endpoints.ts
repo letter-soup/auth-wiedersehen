@@ -12,12 +12,10 @@ export async function createUser(
   email: string = '',
   password: string = '',
   termsAccepted: boolean,
-  clientId?: string,
-  redirectUri?: string,
+  clientId: string,
+  redirectUri: string,
 ): Promise<CreateUserResponse> {
-  const body: CreateUserRequest = { email, password, termsAccepted }
-  if (clientId) body.clientId = clientId
-  if (redirectUri) body.redirectUri = redirectUri
+  const body: CreateUserRequest = { email, password, termsAccepted, clientId, redirectUri }
 
   const response = await fetch('/api/v1/user', {
     method: 'POST',

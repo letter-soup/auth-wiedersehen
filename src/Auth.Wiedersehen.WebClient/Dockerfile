@@ -5,6 +5,7 @@ COPY package-lock.json ./
 
 RUN npm install
 COPY . .
+RUN cp src/env.ts.template src/env.ts
 RUN npm run build
 
 FROM nginx:stable-alpine-slim AS runtime

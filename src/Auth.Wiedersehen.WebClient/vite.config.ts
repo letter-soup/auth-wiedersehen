@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 // import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from '@tailwindcss/vite'
+import { apiUri } from './src/env'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -20,7 +21,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: process.env.AW_API_URL ?? 'http://localhost:5002',
+        target: apiUri,
         changeOrigin: true,
       },
     },

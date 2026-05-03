@@ -21,13 +21,14 @@ import type { TFormValidationCallback } from '@/lib/types'
 import { createFormSchema } from '@/views/sign-up/lib/form-schema'
 import { validateEmail } from '@/views/sign-up/lib/validate-email'
 import { createUser } from '@/lib/api/endpoints.ts'
+import { clientId as defaultClientId, redirectUri as defaultRedirectUri } from '@/env.ts'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 
-const clientId = computed(() => (route.query.client_id as string) || undefined)
-const redirectUri = computed(() => (route.query.redirect_uri as string) || undefined)
+const clientId = computed(() => (route.query.client_id as string) || defaultClientId)
+const redirectUri = computed(() => (route.query.redirect_uri as string) || defaultRedirectUri)
 
 const initialStep: number = 1
 const stepIndex: Ref<number> = ref(initialStep)
