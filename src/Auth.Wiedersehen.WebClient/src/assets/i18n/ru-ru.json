@@ -1,5 +1,7 @@
 {
-  "email-already-taken": "Email уже занят. Попробуйте восстановить пароль",
+  "error:email-already-taken": "Email уже занят. Попробуйте восстановить пароль",
+  "error:invalid-client": "Указанный клиент недействителен",
+  "error:invalid-redirect-uri": "Указанный URI перенаправления не разрешён",
   "error:sign-up:password-mismatch": "Пароли должны совпадать!",
   "error:sign-up:weak-password": "Пароль должен содержать от 8 заглавных и прописных латинских букв, чисел и специальных символов",
   "footer:all-rights-reserved": "Все права защищены",
@@ -21,6 +23,8 @@
   "sign-in:sign-up": "Создайте новый аккаунт",
   "sign-up:confirm-password": "Подтвердите пароль",
   "sign-up:cta": "Подтвердить",
+  "sign-up:error": "Что-то пошло не так. Попробуйте ещё раз",
+  "sign-up:success": "Аккаунт успешно создан",
   "sign-up:cta-acknowledgement": "Нажимая подтвердить, вы принимаете {termsOfService} и {privacyPolicy}",
   "sign-up:email": "Email",
   "sign-up:has-account": "Уже зарегистрированы?",

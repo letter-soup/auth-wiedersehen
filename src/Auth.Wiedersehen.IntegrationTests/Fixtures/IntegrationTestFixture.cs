@@ -88,8 +88,8 @@ public class IntegrationTestFixture : IAsyncLifetime
 			context.Clients.Add(
 				new Client
 				{
-					ClientId = "test-client",
-					ClientSecrets = { new Secret("test-secret".Sha256()) },
+					ClientId = Constants.TestClientId,
+					ClientSecrets = { new Secret(Constants.TestClientSecret.Sha256()) },
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 					AllowedScopes =
 					{
@@ -98,6 +98,7 @@ public class IntegrationTestFixture : IAsyncLifetime
 						"soup",
 					},
 					AllowOfflineAccess = true,
+					RedirectUris = [Constants.TestClientRedirectUri]
 				}.ToEntity()
 			);
 

@@ -7,7 +7,7 @@ internal static class LocalizationExtensions
 		public IHostApplicationBuilder AddLocalization()
 		{
 			builder.Services.AddTransient<ILocalizer, LocalizerAdapter>();
-			builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+			builder.Services.AddLocalization();
 
 			return builder;
 		}

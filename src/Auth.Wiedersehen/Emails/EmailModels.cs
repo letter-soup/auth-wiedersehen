@@ -10,6 +10,7 @@ public class EmailAvailableRequestValidator : AbstractValidator<EmailAvailableRe
 	public EmailAvailableRequestValidator(ILocalizer localizer)
 	{
 		RuleFor(x => x.Email)
+			.Cascade(CascadeMode.Stop)
 			.NotEmpty()
 			.WithMessage(localizer[LocalizationKey.Error.Email.Missing])
 			.EmailAddress()

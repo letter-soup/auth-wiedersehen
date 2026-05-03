@@ -13,8 +13,8 @@ public class RefreshTokenIntegrationTests(IntegrationTestFixture fixture) : Inte
 
 		// Act
 		var initialTokenResponse = await Client.RequestPasswordTokenAsync(
-			TestClientId,
-			TestClientSecret,
+			Constants.TestClientId,
+			Constants.TestClientSecret,
 			user.Email,
 			user.Password,
 			"openid profile soup offline_access"
@@ -27,8 +27,8 @@ public class RefreshTokenIntegrationTests(IntegrationTestFixture fixture) : Inte
 
 		// Use the refresh token
 		var refreshedTokenResponse = await Client.RequestRefreshTokenAsync(
-			TestClientId,
-			TestClientSecret,
+			Constants.TestClientId,
+			Constants.TestClientSecret,
 			initialTokenResponse.RefreshToken!
 		);
 
@@ -47,8 +47,8 @@ public class RefreshTokenIntegrationTests(IntegrationTestFixture fixture) : Inte
 
 		// Act
 		var tokenResponse = await Client.RequestRefreshTokenAsync(
-			TestClientId,
-			TestClientSecret,
+			Constants.TestClientId,
+			Constants.TestClientSecret,
 			invalidRefreshToken
 		);
 

@@ -1,15 +1,21 @@
 using Auth.Wiedersehen.Exceptions;
 using Auth.Wiedersehen.Extensions;
+using Auth.Wiedersehen.Users.Commands;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Wiedersehen.Users;
 
 [ApiController]
 [Route("api/v1/user")]
-public class UserController(IUserService userService) : Controller
+public class UserController(
+	ICreateUserCommand createUserCommand,
+	SignInManager<ApplicationUser> signInManager
+) : Controller
 {
-	private readonly IUserService _userService = userService.Required(nameof(userService));
+	private readonly ICreateUserCommand _createUserCommand = createUserCommand.Required(nameof(createUserCommand));
+	private readonly SignInManager<ApplicationUser> _signInManager = signInManager.Required(nameof(signInManager));
 
 	[HttpPost]
 	[ProducesResponseType<CreateUserResponse>(StatusCodes.Status201Created)]
@@ -26,7 +32,13 @@ public class UserController(IUserService userService) : Controller
 			throw new HttpResponseException(validationResult.ToKeyValuePairs());
 		}
 
-		var result = await _userService.CreateAsync(request);
+		var result = await _createUserCommand.ExecuteAsync(request);
+
+		var user = await _signInManager.UserManager.FindByIdAsync(result.UserId);
+		if (user is not null)
+		{
+			await _signInManager.SignInAsync(user, isPersistent: false);
+		}
 
 		return Created(string.Empty, result);
 	}

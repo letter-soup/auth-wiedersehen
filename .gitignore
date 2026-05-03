@@ -4,3 +4,6 @@ obj/
 .DS_Store
 *.user
 .junie/
+.claude/
+
+.env
