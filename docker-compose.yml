@@ -44,6 +44,23 @@ services:
         tmpfs:
           size: 134217728 # 128*2^20 bytes = 128Mb
 
+  auth-wiedersehen-admin:
+    build:
+      context: ./src/Auth.Wiedersehen.Admin
+      dockerfile: ./Dockerfile
+    ports:
+      - '5003:5003'
+    depends_on:
+      - auth-wiedersehen-db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: "http://0.0.0.0:5003"
+      AWA_ConnectionStrings__ConfigurationDB: ${AW_CONFIGURATION_DB}
+      AWA_ConnectionStrings__ManagerDB: ${AWA_MANAGER_DB}
+      AWA_Jwt__SigningKey: ${AWA_JWT_SIGNING_KEY}
+      AWA_Admin__Username: ${AWA_ADMIN_USERNAME}
+      AWA_Admin__Password: ${AWA_ADMIN_PASSWORD}
+
   auth-wiedersehen-web:
     image: ghcr.io/letter-soup/auth-wiedersehen-web:latest
     build:

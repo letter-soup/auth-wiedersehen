@@ -13,4 +13,5 @@
   <Project Path="Auth.Wiedersehen.UnitTests/Auth.Wiedersehen.UnitTests.csproj" />
   <Project Path="Auth.Wiedersehen/Auth.Wiedersehen.csproj" />
   <Project Path="Auth.Wiedersehen.Shared/Auth.Wiedersehen.Shared.csproj" />
+  <Project Path="Auth.Wiedersehen.Admin/Auth.Wiedersehen.Admin.csproj" />
 </Solution>
