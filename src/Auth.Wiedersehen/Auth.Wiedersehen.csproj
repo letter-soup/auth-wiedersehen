@@ -28,4 +28,7 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
         <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Auth.Wiedersehen.Shared\Auth.Wiedersehen.Shared.csproj" />
+    </ItemGroup>
 </Project>

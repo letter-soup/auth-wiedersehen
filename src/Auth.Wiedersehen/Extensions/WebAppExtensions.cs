@@ -3,7 +3,7 @@ using Auth.Wiedersehen.Configuration;
 using Auth.Wiedersehen.Database.Migrations;
 using Auth.Wiedersehen.Emails;
 using Auth.Wiedersehen.Emails.Queries;
-using Auth.Wiedersehen.Exceptions;
+using Auth.Wiedersehen.Shared.Exceptions;
 using Auth.Wiedersehen.Localization;
 using Auth.Wiedersehen.Users;
 using Auth.Wiedersehen.Users.Commands;

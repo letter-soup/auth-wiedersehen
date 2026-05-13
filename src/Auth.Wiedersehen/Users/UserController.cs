@@ -1,5 +1,5 @@
-using Auth.Wiedersehen.Exceptions;
-using Auth.Wiedersehen.Extensions;
+using Auth.Wiedersehen.Shared.Exceptions;
+using Auth.Wiedersehen.Shared.Extensions;
 using Auth.Wiedersehen.Users.Commands;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;

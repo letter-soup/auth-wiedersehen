@@ -1,6 +1,6 @@
 using Auth.Wiedersehen.Emails.Queries;
-using Auth.Wiedersehen.Exceptions;
-using Auth.Wiedersehen.Extensions;
+using Auth.Wiedersehen.Shared.Exceptions;
+using Auth.Wiedersehen.Shared.Extensions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
