@@ -37,7 +37,7 @@ services:
     environment:
       POSTGRES_PASSWORD: ${DB_ADMIN_PWD}
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - type: tmpfs
         target: /dev/shm
@@ -72,7 +72,7 @@ services:
       - auth-wiedersehen-api
     restart: on-failure:3
     ports:
-      - "8080:80"
+      - '8080:80'
     environment:
       AW_API_URI: ${AW_API_URI}
       AW_CLIENT_ID: ${AW_CLIENT_ID}
