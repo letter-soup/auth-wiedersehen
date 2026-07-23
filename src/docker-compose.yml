@@ -2,8 +2,8 @@ services:
   auth-wiedersehen-api:
     image: ghcr.io/letter-soup/auth-wiedersehen-api:latest
     build:
-      context: ./src/Auth.Wiedersehen
-      dockerfile: ./Dockerfile
+      context: ./
+      dockerfile: ./Dockerfile.Api
     ports:
       - '5002:5002'
     depends_on:
@@ -20,8 +20,8 @@ services:
   auth-wiedersehen-seeder:
     image: ghcr.io/letter-soup/auth-wiedersehen-api:latest
     build:
-      context: ./src/Auth.Wiedersehen.Seeder
-      dockerfile: ./Dockerfile
+      context: ./
+      dockerfile: ./Dockerfile.Seeder
     depends_on:
       - auth-wiedersehen-db
     environment:
@@ -46,8 +46,8 @@ services:
 
   auth-wiedersehen-admin:
     build:
-      context: ./src/Auth.Wiedersehen.Admin
-      dockerfile: ./Dockerfile
+      context: ./
+      dockerfile: ./Dockerfile.Admin
     ports:
       - '5003:5003'
     depends_on:
@@ -64,8 +64,8 @@ services:
   auth-wiedersehen-web:
     image: ghcr.io/letter-soup/auth-wiedersehen-web:latest
     build:
-      context: ./src/Auth.Wiedersehen.WebClient
-      dockerfile: ./Dockerfile
+      context: ./
+      dockerfile: ./Dockerfile.Web
       tags:
         - auth-wiedersehen-web:latest
     depends_on:

@@ -1,10 +1,11 @@
 FROM node:lts-alpine AS builder
+ARG WEB_APP_PATH=Auth.Wiedersehen.WebClient
 WORKDIR /app
-COPY package.json ./
-COPY package-lock.json ./
+COPY $WEB_APP_PATH/package.json ./
+COPY $WEB_APP_PATH/package-lock.json ./
 
 RUN npm install
-COPY . .
+COPY $WEB_APP_PATH/ .
 RUN cp src/env.ts.template src/env.ts
 RUN npm run build
 
