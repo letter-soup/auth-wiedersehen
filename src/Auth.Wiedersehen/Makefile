@@ -1,4 +1,4 @@
-include ../../.env
+include ../.env
 
 
 migrate_configuration:
