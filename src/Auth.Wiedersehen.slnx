@@ -1,12 +1,18 @@
 <Solution>
   <Folder Name="/Meta/">
     <File Path="../.gitignore" />
-    <File Path="../docker-compose.yml" />
     <File Path="../README.md" />
     <File Path="../AGENTS.md" />
-    <File Path="../.env" />
+    <File Path=".env" />
     <File Path="dotnet-tools.json" />
     <File Path="global.json" />
+  </Folder>
+  <Folder Name="/Meta/Docker/">
+    <File Path="docker-compose.yml" />
+    <File Path="Dockerfile.Admin" />
+    <File Path="Dockerfile.Api" />
+    <File Path="Dockerfile.Seeder" />
+    <File Path="Dockerfile.Web" />
   </Folder>
   <Project Path="Auth.Wiedersehen.IntegrationTests/Auth.Wiedersehen.IntegrationTests.csproj" />
   <Project Path="Auth.Wiedersehen.Seeder/Auth.Wiedersehen.Seeder.csproj" />

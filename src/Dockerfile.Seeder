@@ -1,0 +1,26 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+ARG BUILD_CONFIGURATION=Release
+ARG SEED_PROJECT=Auth.Wiedersehen.Seeder
+ARG SEED_PROJECT_FILE=$SEED_PROJECT/$SEED_PROJECT.csproj
+
+WORKDIR /src
+
+COPY $SEED_PROJECT_FILE ./$SEED_PROJECT/
+RUN dotnet restore $SEED_PROJECT_FILE
+
+COPY $SEED_PROJECT/ ./$SEED_PROJECT/
+RUN dotnet build $SEED_PROJECT_FILE -c $BUILD_CONFIGURATION -o /app/build
+
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+ARG SEED_PROJECT=Auth.Wiedersehen.Seeder
+ARG SEED_PROJECT_FILE=$SEED_PROJECT/$SEED_PROJECT.csproj
+
+RUN dotnet publish $SEED_PROJECT_FILE -c $BUILD_CONFIGURATION --self-contained --runtime linux-musl-arm64 -o /app/publish
+
+FROM alpine:latest AS final
+RUN apk add --no-cache libgcc libstdc++ icu-libs
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+ENTRYPOINT ["./Auth.Wiedersehen.Seeder", "/seed"]
