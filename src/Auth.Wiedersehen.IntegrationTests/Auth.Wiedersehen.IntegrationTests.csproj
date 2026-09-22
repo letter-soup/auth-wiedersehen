@@ -33,7 +33,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../Auth.Wiedersehen/Auth.Wiedersehen.csproj" />
-    <ProjectReference Include="../Auth.Wiedersehen.Seeder/Auth.Wiedersehen.Seeder.csproj" />
   </ItemGroup>
 
 </Project>

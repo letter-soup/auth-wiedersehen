@@ -17,19 +17,6 @@ services:
       AUTHW_UI__LoginUrl: ${AW_UI_HOST}/sign-in
       AUTHW_UI__CookieLoginUrl: ${AW_UI_HOST}/cookie/sign-in
 
-  auth-wiedersehen-seeder:
-    image: ghcr.io/letter-soup/auth-wiedersehen-api:latest
-    build:
-      context: ./
-      dockerfile: ./Dockerfile.Seeder
-    depends_on:
-      - auth-wiedersehen-db
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      AWSEED_ConnectionStrings__ApplicationDB: ${AW_APPLICATION_DB}
-      AWSEED_ConnectionStrings__ConfigurationDB: ${AW_CONFIGURATION_DB}
-      AWSEED_ConnectionStrings__PersistentGrandDB: ${AW_PERSISTENT_GRAND_DB}
-
   auth-wiedersehen-db:
     image: postgres:17-alpine
     restart: always

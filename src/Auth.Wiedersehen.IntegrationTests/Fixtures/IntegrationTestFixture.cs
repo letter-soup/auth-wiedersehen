@@ -1,6 +1,7 @@
 using Auth.Wiedersehen.Configuration;
 using Auth.Wiedersehen.Database.Migrations;
-using Auth.Wiedersehen.Seeder.Dataset;
+using Duende.IdentityModel;
+using Duende.IdentityServer;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
 using Duende.IdentityServer.Models;
@@ -75,14 +76,27 @@ public class IntegrationTestFixture : IAsyncLifetime
 	private void SeedIdentityServer(IServiceProvider serviceProvider)
 	{
 		var context = serviceProvider.GetRequiredService<ConfigurationDbContext>();
-		var dataset = new DevDataset();
 
 		if (!context.Clients.Any())
 		{
-			foreach (var client in dataset.Clients)
-			{
-				context.Clients.Add(client.ToEntity());
-			}
+			context.Clients.Add(
+				new Client
+				{
+					ClientId = "soup-web",
+					ClientSecrets = { new Secret("secret".Sha256()) },
+					AllowedGrantTypes = GrantTypes.Code,
+					RedirectUris = { "https://localhost:5000/login" },
+					PostLogoutRedirectUris = { "https://localhost:5000/logoff" },
+					AllowOfflineAccess = true,
+					AllowedScopes =
+					{
+						IdentityServerConstants.StandardScopes.OpenId,
+						IdentityServerConstants.StandardScopes.Profile,
+						"verification",
+						"soup",
+					},
+				}.ToEntity()
+			);
 
 			// Add a test client for integration tests
 			context.Clients.Add(
@@ -107,20 +121,22 @@ public class IntegrationTestFixture : IAsyncLifetime
 
 		if (!context.IdentityResources.Any())
 		{
-			foreach (var resource in dataset.IdentityResources)
-			{
-				context.IdentityResources.Add(resource.ToEntity());
-			}
+			context.IdentityResources.Add(new IdentityResources.OpenId().ToEntity());
+			context.IdentityResources.Add(new IdentityResources.Profile().ToEntity());
+			context.IdentityResources.Add(
+				new IdentityResource
+				{
+					Name = "verification",
+					UserClaims = new List<string> { JwtClaimTypes.Email, JwtClaimTypes.EmailVerified },
+				}.ToEntity()
+			);
 
 			context.SaveChanges();
 		}
 
 		if (!context.ApiScopes.Any())
 		{
-			foreach (var scope in dataset.ApiScopes)
-			{
-				context.ApiScopes.Add(scope.ToEntity());
-			}
+			context.ApiScopes.Add(new ApiScope("soup", "Soup API").ToEntity());
 
 			context.SaveChanges();
 		}

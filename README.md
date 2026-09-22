@@ -9,7 +9,8 @@ built with [Duende IdentityServer](https://duendesoftware.com/products/identitys
 |-----------------------------------------------|------------------------------------------------------------------------------|----------------|
 | **API** (`Auth.Wiedersehen`)                  | ASP.NET Core 10, Duende IdentityServer 7, ASP.NET Identity, EF Core + Npgsql | `5002`         |
 | **Web Client** (`Auth.Wiedersehen.WebClient`) | Vue 3, Vite, TypeScript, Tailwind CSS, shadcn-vue                            | `8080` (nginx) |
-| **Seeder** (`Auth.Wiedersehen.Seeder`)        | .NET 10 console app — bootstraps dev data                                    | —              |
+| **Admin** (`Skoruba.Duende.IdentityServer.Admin`) | Admin UI for managing IdentityServer clients, resources and users        | `5003`         |
+| **Admin API** (`Skoruba.Duende.IdentityServer.Admin.Api`) | REST backend for the Admin UI                                    | `5004`         |
 | **Database**                                  | PostgreSQL 17                                                                | `5432`         |
 
 The backend exposes user registration, sign-in, email verification, and OAuth 2.0 / OpenID Connect endpoints. The frontend provides sign-in, sign-up, and reset-password views with i18n support (English & Russian).
@@ -68,19 +69,6 @@ make full_migrations
 
 This bundles and runs migrations for all three databases. Individual targets are also available: `migrate_application`, `migrate_configuration`, `migrate_persistent_grant`.
 
-### 4. Seed development data
-
-```shell
-docker compose up auth-wiedersehen-seeder
-```
-
-Or run the seeder directly:
-
-```shell
-cd src/Auth.Wiedersehen.Seeder
-dotnet run -- /seed
-```
-
 ## Run application
 
 ### Using Docker Compose (recommended)
@@ -93,6 +81,8 @@ docker compose up --build
 |------------|-------------------------|
 | API        | <http://localhost:5002> |
 | Web Client | <http://localhost:8080> |
+| Admin      | <http://localhost:5003> |
+| Admin API  | <http://localhost:5004> |
 
 ### Self-hosted
 
