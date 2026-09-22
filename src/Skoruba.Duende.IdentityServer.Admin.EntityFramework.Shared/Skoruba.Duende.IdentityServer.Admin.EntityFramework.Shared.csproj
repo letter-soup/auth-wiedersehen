@@ -3,6 +3,10 @@
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 		<Description>DbContexts and Identity entities for the administration of the Duende IdentityServer and Asp.Net Core Identity</Description>
+		<!-- Matches the skoruba NuGet packages' own assembly version: some of their packages load this
+		     assembly by strong name via reflection, so the version must line up even though this is now
+		     a local project rather than the published skoruba NuGet package. -->
+		<AssemblyVersion>3.1.0.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

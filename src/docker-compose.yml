@@ -44,6 +44,36 @@ services:
         tmpfs:
           size: 134217728 # 128*2^20 bytes = 128Mb
 
+  auth-wiedersehen-admin-api:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.AdminApi
+    ports:
+      - '5004:5004'
+    depends_on:
+      - auth-wiedersehen-db
+      - auth-wiedersehen-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: "http://0.0.0.0:5004"
+      AWA_ConnectionStrings__ConfigurationDbConnection: ${AW_CONFIGURATION_DB}
+      AWA_ConnectionStrings__PersistedGrantDbConnection: ${AW_PERSISTENT_GRAND_DB}
+      AWA_ConnectionStrings__IdentityDbConnection: ${AWA_MANAGER_DB}
+      AWA_ConnectionStrings__AdminLogDbConnection: ${AWA_MANAGER_DB}
+      AWA_ConnectionStrings__AdminAuditLogDbConnection: ${AWA_MANAGER_DB}
+      AWA_ConnectionStrings__DataProtectionDbConnection: ${AWA_MANAGER_DB}
+      AWA_ConnectionStrings__AdminConfigurationDbConnection: ${AWA_MANAGER_DB}
+      AWA_AdminApiConfiguration__ApiBaseUrl: ${AWA_ADMIN_API_HOST}
+      AWA_AdminApiConfiguration__IdentityServerBaseUrl: ${AW_API_URI}
+      AWA_ADMIN_USERNAME: ${AWA_ADMIN_USERNAME}
+      AWA_ADMIN_PASSWORD: ${AWA_ADMIN_PASSWORD}
+      AWA_ADMIN_EMAIL: ${AWA_ADMIN_EMAIL}
+      AWA_ADMIN_ROLE: ${AWA_ADMIN_ROLE}
+      AWA_ADMIN_CLIENT_ID: ${AWA_ADMIN_CLIENT_ID}
+      AWA_ADMIN_CLIENT_SECRET: ${AWA_ADMIN_CLIENT_SECRET}
+      AWA_ADMIN_HOST: ${AWA_ADMIN_HOST}
+      AWA_ADMIN_API_HOST: ${AWA_ADMIN_API_HOST}
+
   auth-wiedersehen-admin:
     build:
       context: ./
@@ -51,15 +81,16 @@ services:
     ports:
       - '5003:5003'
     depends_on:
-      - auth-wiedersehen-db
+      - auth-wiedersehen-admin-api
+      - auth-wiedersehen-api
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: "http://0.0.0.0:5003"
-      AWA_ConnectionStrings__ConfigurationDB: ${AW_CONFIGURATION_DB}
-      AWA_ConnectionStrings__ManagerDB: ${AWA_MANAGER_DB}
-      AWA_Jwt__SigningKey: ${AWA_JWT_SIGNING_KEY}
-      AWA_Admin__Username: ${AWA_ADMIN_USERNAME}
-      AWA_Admin__Password: ${AWA_ADMIN_PASSWORD}
+      AWA_ConnectionStrings__DataProtectionDbConnection: ${AWA_MANAGER_DB}
+      AWA_AdminConfiguration__AuthenticationConfiguration__Authority: ${AW_API_URI}
+      AWA_AdminConfiguration__AuthenticationConfiguration__ClientId: ${AWA_ADMIN_CLIENT_ID}
+      AWA_AdminConfiguration__AuthenticationConfiguration__ClientSecret: ${AWA_ADMIN_CLIENT_SECRET}
+      AWA_AdminConfiguration__ApiConfiguration__ApiRemoteConfiguration__RemoteUrl: ${AWA_ADMIN_API_HOST}
 
   auth-wiedersehen-web:
     image: ghcr.io/letter-soup/auth-wiedersehen-web:latest

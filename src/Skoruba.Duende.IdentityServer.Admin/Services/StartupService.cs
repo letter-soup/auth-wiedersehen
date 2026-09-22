@@ -107,6 +107,7 @@ public static class StartupService
             {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.Authority = adminConfiguration.AuthenticationConfiguration.Authority;
+                options.RequireHttpsMetadata = false;
                 options.ClientId = adminConfiguration.AuthenticationConfiguration.ClientId;
                 options.ResponseType = "code";
 

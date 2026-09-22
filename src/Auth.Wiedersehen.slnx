@@ -11,6 +11,7 @@
   <Folder Name="/Meta/Docker/">
     <File Path="docker-compose.yml" />
     <File Path="Dockerfile.Admin" />
+    <File Path="Dockerfile.AdminApi" />
     <File Path="Dockerfile.Api" />
     <File Path="Dockerfile.Seeder" />
     <File Path="Dockerfile.Web" />
