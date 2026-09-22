@@ -1,0 +1,31 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+ARG BUILD_CONFIGURATION=Release
+ARG ADMIN_PROJECT=Skoruba.Duende.IdentityServer.Admin
+ARG ADMIN_PROJECT_FILE=$ADMIN_PROJECT/$ADMIN_PROJECT.csproj
+
+WORKDIR /src
+
+COPY Directory.Packages.props ./
+COPY $ADMIN_PROJECT_FILE ./$ADMIN_PROJECT/
+COPY Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared/Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared.csproj ./Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared/
+COPY Skoruba.Duende.IdentityServer.Admin.EntityFramework.PostgreSQL/Skoruba.Duende.IdentityServer.Admin.EntityFramework.PostgreSQL.csproj ./Skoruba.Duende.IdentityServer.Admin.EntityFramework.PostgreSQL/
+RUN dotnet restore $ADMIN_PROJECT_FILE
+
+COPY $ADMIN_PROJECT/ ./$ADMIN_PROJECT/
+COPY Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared/ ./Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared/
+COPY Skoruba.Duende.IdentityServer.Admin.EntityFramework.PostgreSQL/ ./Skoruba.Duende.IdentityServer.Admin.EntityFramework.PostgreSQL/
+RUN dotnet build $ADMIN_PROJECT_FILE -c $BUILD_CONFIGURATION -o /app/build
+
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+ARG ADMIN_PROJECT=Skoruba.Duende.IdentityServer.Admin
+ARG ADMIN_PROJECT_FILE=$ADMIN_PROJECT/$ADMIN_PROJECT.csproj
+
+RUN dotnet publish $ADMIN_PROJECT_FILE -c $BUILD_CONFIGURATION --self-contained --runtime linux-musl-arm64 -o /app/publish
+
+FROM alpine:latest AS final
+RUN apk add --no-cache libgcc libstdc++ icu-libs krb5-libs
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+ENTRYPOINT ["./Skoruba.Duende.IdentityServer.Admin"]

@@ -1,4 +1,4 @@
-using Auth.Wiedersehen.Extensions;
+using Auth.Wiedersehen.Shared.Extensions;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 

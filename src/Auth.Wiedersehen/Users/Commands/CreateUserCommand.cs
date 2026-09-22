@@ -1,5 +1,6 @@
-using Auth.Wiedersehen.Exceptions;
 using Auth.Wiedersehen.Extensions;
+using Auth.Wiedersehen.Shared.Exceptions;
+using Auth.Wiedersehen.Shared.Extensions;
 using Microsoft.AspNetCore.Identity;
 
 namespace Auth.Wiedersehen.Users.Commands;

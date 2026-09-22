@@ -8,7 +8,7 @@ Auth.Wiedersehen is an authentication / identity service. It consists of:
 
 - **Backend API** (`src/Auth.Wiedersehen/`) — ASP.NET Core 10 web API using Duende IdentityServer 7, ASP.NET Identity, Entity Framework Core with PostgreSQL (Npgsql).
 - **Web Client** (`src/Auth.Wiedersehen.WebClient/`) — Vue 3 SPA (Vite, TypeScript, Tailwind CSS, shadcn-vue, Pinia, vue-i18n).
-- **Seeder** (`src/Auth.Wiedersehen.Seeder/`) — .NET console app that seeds development data into the databases.
+- **Admin** (`src/Skoruba.Duende.IdentityServer.Admin/` + `.Admin.Api/`) — [skoruba/Duende.IdentityServer.Admin](https://github.com/skoruba/Duende.IdentityServer.Admin), for managing IdentityServer clients/resources and Identity users/roles; logs in via the backend API as its own IdentityServer client and reads/writes the same `configuration_db`/`persisted_grant_db`.
 - **Tests** — Unit tests (`Auth.Wiedersehen.UnitTests`), integration tests (`Auth.Wiedersehen.IntegrationTests`), frontend unit tests (Vitest), and E2E tests (Playwright).
 
 ## Tech stack
@@ -36,7 +36,7 @@ Auth.Wiedersehen is an authentication / identity service. It consists of:
 ```
 /
 ├── .github/workflows/       # CI pipelines (build + publish, CodeQL)
-├── docker-compose.yml        # Local dev orchestration (API, DB, seeder, web)
+├── docker-compose.yml        # Local dev orchestration (API, DB, web, admin, admin-api)
 ├── README.md                 # Root documentation
 ├── AGENTS.md                 # This file
 ├── src/
@@ -54,10 +54,12 @@ Auth.Wiedersehen is an authentication / identity service. It consists of:
 │   │   ├── Makefile                       # EF Core migration targets
 │   │   ├── Dockerfile
 │   │   └── Program.cs
-│   ├── Auth.Wiedersehen.Seeder/           # Database seeder
 │   ├── Auth.Wiedersehen.UnitTests/        # xUnit unit tests
 │   ├── Auth.Wiedersehen.IntegrationTests/ # xUnit integration tests
-│   └── Auth.Wiedersehen.WebClient/        # Vue 3 SPA
+│   ├── Auth.Wiedersehen.WebClient/        # Vue 3 SPA
+│   ├── Skoruba.Duende.IdentityServer.Admin/       # Admin UI host
+│   ├── Skoruba.Duende.IdentityServer.Admin.Api/   # Admin REST backend
+│   └── Skoruba.Duende.IdentityServer.*             # Admin's EF Core/shared support projects
 │       ├── src/
 │       │   ├── assets/                    # CSS, i18n JSON
 │       │   ├── components/                # layout, primitives, ui (shadcn)
@@ -79,7 +81,7 @@ Auth.Wiedersehen is an authentication / identity service. It consists of:
 - Follow existing patterns: extension methods for service registration (`ConfigureServices`, `ConfigurePipeline`), feature folders (`Users/`, `Emails/`, `Authentication/`).
 - Validation uses FluentValidation — add validators alongside the feature they validate.
 - Logging via Serilog — use structured logging (`Log.Information("Message {Param}", value)`).
-- Configuration is injected via `IOptions<T>` / `IConfiguration` with environment-variable prefixes (`AUTHW_` for the API, `AWSEED_` for the seeder).
+- Configuration is injected via `IOptions<T>` / `IConfiguration` with environment-variable prefixes (`AUTHW_` for the API, `AWA_` for the Admin UI/API).
 - EF Core migrations live under `Database/Migrations/` with separate sub-folders per context (`ApplicationDb`, `ConfigurationDb`, `PersistedGrantDb`).
 - Tests use xUnit with AutoFixture. Integration tests share a fixture (`IntegrationTestFixture`) and collection (`IntegrationTestsCollection`).
 
@@ -98,8 +100,7 @@ Auth.Wiedersehen is an authentication / identity service. It consists of:
 1. `docker compose up -d auth-wiedersehen-db` — start PostgreSQL.
 2. Create a `.env` file at the repo root (see root `README.md` for template).
 3. `cd src/Auth.Wiedersehen && make full_migrations` — apply EF Core migrations.
-4. `docker compose up auth-wiedersehen-seeder` — seed dev data.
-5. `docker compose up --build` — run all services, or start API and web client individually (see root `README.md`).
+4. `docker compose up --build` — run all services, or start API and web client individually (see root `README.md`).
 
 ## Testing
 
@@ -113,7 +114,7 @@ Auth.Wiedersehen is an authentication / identity service. It consists of:
 - The solution file uses the `.slnx` format (XML-based, lightweight).
 - The backend publishes as a **self-contained single-file** executable targeting `linux-musl-x64` (Alpine).
 - Three separate PostgreSQL databases are used — do not assume a single database.
-- Environment variables use prefixes: `AUTHW_` (API), `AWSEED_` (seeder). Nested keys use `__` as separator (e.g., `AUTHW_ConnectionStrings__ApplicationDB`).
+- Environment variables use prefixes: `AUTHW_` (API), `AWA_` (Admin UI/API). Nested keys use `__` as separator (e.g., `AUTHW_ConnectionStrings__ApplicationDB`).
 - The frontend Docker image serves via **nginx** — the config is at `.nginx/nginx.conf`.
 - When adding new API endpoints, follow the existing controller pattern in feature folders and register routes in the pipeline extensions.
 - When adding new frontend pages, add the route in `src/router/index.ts` and create a view folder under `src/views/`.

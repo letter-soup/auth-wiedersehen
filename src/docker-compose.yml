@@ -1,0 +1,97 @@
+services:
+  auth-wiedersehen-api:
+    image: ghcr.io/letter-soup/auth-wiedersehen-api:latest
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.Api
+    ports:
+      - '5002:5002'
+    depends_on:
+      - auth-wiedersehen-db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: "http://0.0.0.0:5002"
+      AUTHW_ConnectionStrings__ApplicationDB: ${AW_APPLICATION_DB}
+      AUTHW_ConnectionStrings__ConfigurationDB: ${AW_CONFIGURATION_DB}
+      AUTHW_ConnectionStrings__PersistentGrandDB: ${AW_PERSISTENT_GRAND_DB}
+      AUTHW_UI__LoginUrl: ${AW_UI_HOST}/sign-in
+      AUTHW_UI__CookieLoginUrl: ${AW_UI_HOST}/cookie/sign-in
+
+  auth-wiedersehen-db:
+    image: postgres:17-alpine
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: ${DB_ADMIN_PWD}
+    ports:
+      - '5432:5432'
+    volumes:
+      - type: tmpfs
+        target: /dev/shm
+        tmpfs:
+          size: 134217728 # 128*2^20 bytes = 128Mb
+
+  auth-wiedersehen-admin-api:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.AdminApi
+    ports:
+      - '5004:5004'
+    depends_on:
+      - auth-wiedersehen-db
+      - auth-wiedersehen-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: "http://0.0.0.0:5004"
+      AWA_ConnectionStrings__ConfigurationDbConnection: ${AW_CONFIGURATION_DB}
+      AWA_ConnectionStrings__PersistedGrantDbConnection: ${AW_PERSISTENT_GRAND_DB}
+      AWA_ConnectionStrings__IdentityDbConnection: ${AWA_MANAGER_DB}
+      AWA_ConnectionStrings__AdminLogDbConnection: ${AWA_MANAGER_DB}
+      AWA_ConnectionStrings__AdminAuditLogDbConnection: ${AWA_MANAGER_DB}
+      AWA_ConnectionStrings__DataProtectionDbConnection: ${AWA_MANAGER_DB}
+      AWA_ConnectionStrings__AdminConfigurationDbConnection: ${AWA_MANAGER_DB}
+      AWA_AdminApiConfiguration__ApiBaseUrl: ${AWA_ADMIN_API_HOST}
+      AWA_AdminApiConfiguration__IdentityServerBaseUrl: ${AW_API_URI}
+      AWA_ADMIN_USERNAME: ${AWA_ADMIN_USERNAME}
+      AWA_ADMIN_PASSWORD: ${AWA_ADMIN_PASSWORD}
+      AWA_ADMIN_EMAIL: ${AWA_ADMIN_EMAIL}
+      AWA_ADMIN_ROLE: ${AWA_ADMIN_ROLE}
+      AWA_ADMIN_CLIENT_ID: ${AWA_ADMIN_CLIENT_ID}
+      AWA_ADMIN_CLIENT_SECRET: ${AWA_ADMIN_CLIENT_SECRET}
+      AWA_ADMIN_HOST: ${AWA_ADMIN_HOST}
+      AWA_ADMIN_API_HOST: ${AWA_ADMIN_API_HOST}
+
+  auth-wiedersehen-admin:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.Admin
+    ports:
+      - '5003:5003'
+    depends_on:
+      - auth-wiedersehen-admin-api
+      - auth-wiedersehen-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: "http://0.0.0.0:5003"
+      AWA_ConnectionStrings__DataProtectionDbConnection: ${AWA_MANAGER_DB}
+      AWA_AdminConfiguration__AuthenticationConfiguration__Authority: ${AW_API_URI}
+      AWA_AdminConfiguration__AuthenticationConfiguration__ClientId: ${AWA_ADMIN_CLIENT_ID}
+      AWA_AdminConfiguration__AuthenticationConfiguration__ClientSecret: ${AWA_ADMIN_CLIENT_SECRET}
+      AWA_AdminConfiguration__ApiConfiguration__ApiRemoteConfiguration__RemoteUrl: ${AWA_ADMIN_API_HOST}
+
+  auth-wiedersehen-web:
+    image: ghcr.io/letter-soup/auth-wiedersehen-web:latest
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.Web
+      tags:
+        - auth-wiedersehen-web:latest
+    depends_on:
+      - auth-wiedersehen-api
+    restart: on-failure:3
+    ports:
+      - '8080:80'
+    environment:
+      AW_API_URI: ${AW_API_URI}
+      AW_CLIENT_ID: ${AW_CLIENT_ID}
+      AW_REDIRECT_URI: ${AW_REDIRECT_URI}

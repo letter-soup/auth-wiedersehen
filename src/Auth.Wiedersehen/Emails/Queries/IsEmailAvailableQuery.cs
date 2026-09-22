@@ -1,4 +1,4 @@
-using Auth.Wiedersehen.Extensions;
+using Auth.Wiedersehen.Shared.Extensions;
 using Auth.Wiedersehen.Users;
 using Microsoft.AspNetCore.Identity;
 
