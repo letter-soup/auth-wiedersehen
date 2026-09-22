@@ -1,0 +1,25 @@
+{
+  "IdentityData": {
+    "Roles": [
+      {
+        "Name": "${AWA_ADMIN_ROLE}"
+      }
+    ],
+    "Users": [
+      {
+        "Username": "${AWA_ADMIN_USERNAME}",
+        "Password": "${AWA_ADMIN_PASSWORD}",
+        "Email": "${AWA_ADMIN_EMAIL}",
+        "Roles": [
+          "${AWA_ADMIN_ROLE}"
+        ],
+        "Claims": [
+          {
+            "Type": "name",
+            "Value": "${AWA_ADMIN_USERNAME}"
+          }
+        ]
+      }
+    ]
+  }
+}

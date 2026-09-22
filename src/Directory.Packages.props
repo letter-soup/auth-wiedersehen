@@ -10,10 +10,10 @@
     <PackageVersion Include="Duende.IdentityServer.EntityFramework" Version="8.0.3" />
     <PackageVersion Include="Duende.IdentityModel" Version="8.1.0" />
     <PackageVersion Include="FluentValidation" Version="12.1.1" />
-    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.10" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.10" />
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.12" />
     <PackageVersion Include="Npgsql" Version="10.0.3" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
     <PackageVersion Include="Serilog.AspNetCore" Version="10.0.0" />
@@ -25,6 +25,27 @@
     <PackageVersion Include="Moq" Version="4.20.72" />
     <PackageVersion Include="Testcontainers.PostgreSql" Version="4.13.0" />
     <PackageVersion Include="xunit.v3" Version="3.2.2" />
+
+    <!-- Skoruba Duende IdentityServer Admin (Part B) -->
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.AspNetCore.SpaProxy" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.12" />
+    <PackageVersion Include="Skoruba.Duende.IdentityServer.Admin.UI" Version="3.1.0" />
+    <PackageVersion Include="Skoruba.Duende.IdentityServer.Admin.UI.Spa" Version="3.1.0" />
+    <PackageVersion Include="Skoruba.Duende.IdentityServer.Admin.UI.Api" Version="3.1.0" />
+    <PackageVersion Include="Skoruba.Duende.IdentityServer.Shared.Configuration" Version="3.1.0" />
+    <PackageVersion Include="Skoruba.Duende.IdentityServer.Admin.EntityFramework.Admin.Storage" Version="3.1.0" />
+    <PackageVersion Include="Skoruba.Duende.IdentityServer.Admin.EntityFramework.Configuration" Version="3.1.0" />
+    <PackageVersion Include="Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity" Version="3.1.0" />
+    <PackageVersion Include="Skoruba.AuditLogging.EntityFramework" Version="3.0.0" />
+    <PackageVersion Include="NSwag.AspNetCore" Version="14.7.1" />
+    <PackageVersion Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.5.2" />
+    <PackageVersion Include="Azure.Extensions.AspNetCore.DataProtection.Keys" Version="1.6.4" />
+    <PackageVersion Include="Azure.Identity" Version="1.21.0" />
+    <PackageVersion Include="Azure.Security.KeyVault.Certificates" Version="4.9.1" />
+    <PackageVersion Include="Sendgrid" Version="9.29.3" />
   </ItemGroup>
 
 </Project>

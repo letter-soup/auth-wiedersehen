@@ -4,6 +4,7 @@
     <File Path="../README.md" />
     <File Path="../AGENTS.md" />
     <File Path=".env" />
+    <File Path="Directory.Packages.props" />
     <File Path="dotnet-tools.json" />
     <File Path="global.json" />
   </Folder>
@@ -19,4 +20,9 @@
   <Project Path="Auth.Wiedersehen.UnitTests/Auth.Wiedersehen.UnitTests.csproj" />
   <Project Path="Auth.Wiedersehen/Auth.Wiedersehen.csproj" />
   <Project Path="Auth.Wiedersehen.Shared/Auth.Wiedersehen.Shared.csproj" />
+  <Project Path="Skoruba.Duende.IdentityServer.Admin.Api/Skoruba.Duende.IdentityServer.Admin.Api.csproj" />
+  <Project Path="Skoruba.Duende.IdentityServer.Admin.EntityFramework.PostgreSQL/Skoruba.Duende.IdentityServer.Admin.EntityFramework.PostgreSQL.csproj" />
+  <Project Path="Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared/Skoruba.Duende.IdentityServer.Admin.EntityFramework.Shared.csproj" />
+  <Project Path="Skoruba.Duende.IdentityServer.Admin/Skoruba.Duende.IdentityServer.Admin.csproj" />
+  <Project Path="Skoruba.Duende.IdentityServer.Shared/Skoruba.Duende.IdentityServer.Shared.csproj" />
 </Solution>
